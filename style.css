@@ -1,0 +1,16 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; background: #1a1a2e; color: #eee; padding: 20px; max-width: 800px; margin: 0 auto; }
+header { text-align: center; padding: 20px 0 40px; }
+h1 { font-size: 28px; margin-bottom: 8px; }
+.subtitle { color: #888; font-size: 14px; }
+.folder { background: #16213e; border-radius: 12px; margin-bottom: 12px; overflow: hidden; border: 1px solid #0f3460; }
+.folder-header { padding: 16px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; }
+.folder-header:hover { background: #1a2a4a; }
+.folder-header .arrow { margin-left: auto; transition: transform 0.2s; font-size: 12px; color: #888; }
+.folder.open > .folder-header .arrow { transform: rotate(90deg); }
+.folder-content { display: none; padding: 0 20px 16px 44px; }
+.folder.open > .folder-content { display: block; }
+.doc { padding: 10px 0; color: #aaa; cursor: pointer; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #0f3460; font-size: 14px; }
+.doc:last-child { border-bottom: none; }
+.doc:hover { color: #4fc3f7; }
+.doc::before { content: "📄"; font-size: 16px; }
