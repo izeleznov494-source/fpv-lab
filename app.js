@@ -1,78 +1,48 @@
-const data = [
-    { title: "1. Основные компоненты и архитектура", children: [{ title: "Рама", text: "Здесь будет подробный текст про рамы..." }, { title: "Моторы", text: "Текст про моторы..." }, { title: "ESC", text: "..." }, { title: "FC", text: "..." }, { title: "VTX", text: "..." }, { title: "FPV-камера", text: "..." }, { title: "Приёмник", text: "..." }, { title: "Антенны", text: "..." }, { title: "Пропеллеры", text: "..." }, { title: "PDB / BEC", text: "..." }] },
-    { title: "2. Полётные режимы и управление", children: [{ title: "Angle Mode", text: "..." }, { title: "Horizon Mode", text: "..." }, { title: "Acro Mode", text: "..." }, { title: "Air Mode", text: "..." }, { title: "Throttle", text: "..." }, { title: "Yaw", text: "..." }, { title: "Pitch", text: "..." }, { title: "Roll", text: "..." }, { title: "Simulator", text: "..." }, { title: "GPS Rescue", text: "..." }] },
-    { title: "3. Видеосистемы и связь", children: [{ title: "Аналоговое видео", text: "..." }, { title: "Цифровое HD (DJI)", text: "..." }, { title: "Цифровое HD (HDZero)", text: "..." }, { title: "Задержка", text: "..." }, { title: "Диапазоны частот", text: "..." }, { title: "Мощность VTX", text: "..." }, { title: "Поляризация", text: "..." }, { title: "Очки (Goggles)", text: "..." }, { title: "Diversity", text: "..." }, { title: "Помехоустойчивость", text: "..." }] },
-    { title: "4. Питание и аккумуляторы", children: [{ title: "LiPo", text: "..." }, { title: "Li-Ion", text: "..." }, { title: "Ячейки (S)", text: "..." }, { title: "Ёмкость (mAh)", text: "..." }, { title: "Время полёта", text: "..." }, { title: "Разъёмы", text: "..." }, { title: "Зарядка", text: "..." }, { title: "Хранение", text: "..." }, { title: "Просадки напряжения", text: "..." }, { title: "Риски", text: "..." }] },
-    { title: "5. Применение", children: [{ title: "Гонки", text: "..." }, { title: "Фристайл", text: "..." }, { title: "Cinewhoop", text: "..." }, { title: "Long Range", text: "..." }, { title: "FPV-камикадзе", text: "..." }, { title: "Разведка", text: "..." }, { title: "Поиск и спасение", text: "..." }, { title: "Кинематограф", text: "..." }, { title: "Инспекция", text: "..." }, { title: "Обучение", text: "..." }] },
-    { title: "6. Регулирование и безопасность", children: [{ title: "Наблюдатель (VLOS)", text: "..." }, { title: "Регистрация", text: "..." }, { title: "Экзамен", text: "..." }, { title: "Зоны полётов", text: "..." }, { title: "Высота", text: "..." }, { title: "Ответственность", text: "..." }, { title: "Помехи", text: "..." }, { title: "Погода", text: "..." }, { title: "Безопасность людей", text: "..." }] },
-    { title: "7. Настройка и прошивки", children: [{ title: "Betaflight", text: "..." }, { title: "ExpressLRS", text: "..." }, { title: "PID", text: "..." }, { title: "Rates", text: "..." }, { title: "OSD", text: "..." }, { title: "CLI", text: "..." }, { title: "Прошивка ESC", text: "..." }, { title: "VTX Tables", text: "..." }, { title: "Режимы", text: "..." }, { title: "Симулятор", text: "..." }] },
-    { title: "8. Ремонт и обслуживание", children: [{ title: "Замена пропеллера", text: "..." }, { title: "Перепайка мотора", text: "..." }, { title: "Замена рамы", text: "..." }, { title: "Проверка антенн", text: "..." }, { title: "Чистка", text: "..." }, { title: "Проверка винтов", text: "..." }, { title: "Диагностика FC", text: "..." }, { title: "Замена камеры", text: "..." }, { title: "Тест моторов", text: "..." }, { title: "Аккумуляторы", text: "..." }] },
-    { title: "9. Сборка и пайка", children: [{ title: "Пайка моторов", text: "..." }, { title: "Пайка питания", text: "..." }, { title: "Пайка VTX", text: "..." }, { title: "Установка FC", text: "..." }, { title: "Проверка КЗ", text: "..." }, { title: "Smoke Stopper", text: "..." }, { title: "Антенны", text: "..." }, { title: "Укладка проводов", text: "..." }, { title: "Прошивка FC", text: "..." }, { title: "Тест без пропеллеров", text: "..." }] },
-    { title: "10. Спецприменение", children: [{ title: "FPV-камикадзе", text: "..." }, { title: "Дальность", text: "..." }, { title: "Нагрузка", text: "..." }, { title: "Скорость", text: "..." }, { title: "Оптоволокно", text: "..." }, { title: "Ночные версии", text: "..." }, { title: "Дешевизна", text: "..." }, { title: "Маневренность", text: "..." }, { title: "РЭБ", text: "..." }, { title: "Автосопровождение", text: "..." }] }
-];
+    "Моторы": `<b>Моторы — это сердце FPV-дрона</b>, и от их правильного выбора зависит не просто скорость, а управляемость, эффективность и живучесть всей сборки. Если выбрать неправильно, дрон будет либо вялым, либо перегреваться и сбрасывать синхронизацию.
 
-const appContainer = document.getElementById('app');
-const mainHeader = document.getElementById('main-header');
-const readerView = document.getElementById('reader-view');
-const readerTitle = document.getElementById('reader-title');
-const readerContent = document.getElementById('reader-content');
+<i>(Здесь на сайте будет картинка с моторами)</i>
 
-function render(items, container) {
-    items.forEach(item => {
-        if (item.children) {
-            const folder = document.createElement('div');
-            folder.className = 'folder';
-            
-            const header = document.createElement('div');
-            header.className = 'folder-header';
-            header.innerHTML = `<span>📁</span><span>${item.title}</span><span class="arrow">▶</span>`;
-            
-            const content = document.createElement('div');
-            content.className = 'folder-content';
-            
-            header.addEventListener('click', () => {
-                folder.classList.toggle('open');
-                // Если закрываем папку, плавно скрываем контент
-                if(!folder.classList.contains('open')) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
-            });
-            
-            folder.appendChild(header);
-            folder.appendChild(content);
-            container.appendChild(folder);
-            
-            render(item.children, content);
-        } else {
-            const doc = document.createElement('div');
-            doc.className = 'doc';
-            doc.innerHTML = `<span>📄</span> <span>${item.title}</span>`;
-            doc.addEventListener('click', () => {
-                openReader(item.title, item.text || "Текст лекции пока не добавлен.");
-            });
-            container.appendChild(doc);
-        }
-    });
-}
+<b>Как читать маркировку: размер статора</b>
+Название мотора вроде 2207 или 2306 — это не случайный набор цифр, а размеры статора в миллиметрах. Первые две цифры — ширина (диаметр), вторые две — высота.
 
-function openReader(title, text) {
-    readerTitle.textContent = title;
-    // Заменяем переносы строк на HTML теги для красивого отображения
-    readerContent.innerHTML = text.replace(/\n/g, '<br><br>'); 
-    
-    mainHeader.classList.add('hidden');
-    appContainer.classList.add('hidden');
-    readerView.classList.remove('hidden');
-    window.scrollTo(0, 0);
-}
+• <b>Ширина (первые цифры):</b> Чем шире статор, тем больше крутящего момента (torque). Это важно для быстрого раскручивания тяжелых пропеллеров и резких маневров.
+• <b>Высота (вторые цифры):</b> Чем выше статор, тем больше пиковой мощности на высоких оборотах, но может страдать отзывчивость на малом газу.
 
-function closeReader() {
-    mainHeader.classList.remove('hidden');
-    appContainer.classList.remove('hidden');
-    readerView.classList.add('hidden');
-}
+<i>(Здесь на сайте будет картинка с устройством мотора)</i>
 
-// Инициализация
-render(data, appContainer);
+Для 5-дюймовых дронов классикой считаются размеры 2207 и 2306. Разница между ними тонкая, но ощутимая:
+• <b>2207:</b> Дает мощный «пинок» на высоких оборотах, хорош для гонок и резкого акро-пилотажа.
+• <b>2306:</b> Обеспечивает более линейную и предсказуемую тягу по всему диапазону газа, что часто предпочтительнее для фристайла и киносъемки.
+
+<b>KV: компромисс между скоростью и тягой</b>
+KV — это показатель того, сколько оборотов мотор теоретически разовьет на 1 вольт напряжения (без нагрузки). Здесь работает простое правило: высокий KV = высокая скорость вращения, но меньше тяги (момента); низкий KV = больше момента, но меньше максимальная скорость.
+
+Для 5-дюймовых дронов выбор KV напрямую зависит от напряжения батареи:
+• <b>6S (современный стандарт):</b> Оптимальный диапазон 1700–2000 KV для фристайла и 1950–2150 KV для гонок. Низкий KV на высоком напряжении дает высокую эффективность и меньше нагрева.
+• <b>4S (уходящий стандарт):</b> Требует более высокого KV, обычно 2400–2750 KV, чтобы достичь сопоставимых оборотов.
+
+<b>Важно:</b> Никогда не ставьте моторы с KV, рассчитанным на 4S (например, 2400+), на батарею 6S. Это мгновенно перегреет и сожжет обмотки или ESC.
+
+<b>Качество сборки: на что смотреть, кроме цифр</b>
+Дешевые моторы могут выглядеть так же, но разница в «начинке» огромна:
+• <b>Магниты:</b> Ищите маркировку N52SH или N54H. Буква «Н» означает высокотемпературную стойкость, что критично, так как моторы в FPV греются сильно. Дешевые магниты (N48 и ниже) при перегреве теряют силу (демагнитизация).
+• <b>Подшипники:</b> Брендовые моторы часто используют японские подшипники (EZO, NMB). Дешевые китайские аналоги быстрее начинают люфтить и шуметь после нескольких десятков полетов.
+• <b>Колокол (Bell):</b> Цельный (Unibell) колокол прочнее при крашах, чем сборный из двух частей.
+
+<b>Проблемные вопросы и их решение</b>
+Даже правильные моторы могут доставлять проблемы. Вот самые частые:
+
+<b>1. Десинк (Desync) на полном газу</b>
+• <b>Симптом:</b> Мотор «заикается», дергается или издает треск при резком газе, дрон может упасть.
+• <b>Причина:</b> ESC теряет синхронизацию с ротором из-за слишком высокой скорости нарастания оборотов или неправильных настроек.
+• <b>Решение:</b> В настройках BLHeli/Bluejay включите Bidirectional DShot и RPM Filter. Снизьте Motor Timing. Убедитесь, что пропеллеры не слишком тяжелые для вашего KV.
+
+<b>2. Перегрев (Overheating)</b>
+• <b>Симптом:</b> Мотор невозможно удержать пальцем более 2 секунд после полета (температура выше 80°С).
+• <b>Причина:</b> «Оверпроппинг» (слишком тяжелый пропеллер), слишком высокие PID-коэффициенты (особенно D-term) или несоответствие KV напряжению батареи.
+• <b>Решение:</b> Проверьте соответствие пропеллера мотору. Снизьте D-term в Betaflight. Проверьте, не задевают ли винты крепления обмотку внутри мотора.
+
+<b>3. Стук или вибрация</b>
+• <b>Симптом:</b> Мотор крутится с рычанием, или дрон дрожит.
+• <b>Причина:</b> Погнутый колокол после краша (задевает статор), изношенные подшипники или ослабшие винты крепления.
+• <b>Решение:</b> Снимите пропеллер и покрутите мотор рукой. Если чувствуется заедание или слышен хруст — нужна замена колокола/подшипников. Если люфта нет — проверьте затяжку винтов.`,
