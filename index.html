@@ -7,38 +7,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Кнопка для открытия меню (мобильная версия) -->
-    <button id="menu-toggle" class="menu-btn">☰</button>
-
-    <!-- Боковое меню (Sidebar) -->
-    <aside id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-icon">🚀</div>
-            <h2>FPV LAB</h2>
-        </div>
-        <div class="sidebar-menu" id="sidebar-menu">
-            <!-- Сюда будут загружаться темы из app.js -->
-        </div>
-    </aside>
-
-    <!-- Затемнение фона при открытом меню -->
-    <div id="overlay" class="overlay"></div>
-
-    <!-- Основная рабочая область -->
-    <main id="main-content" class="main-content">
-        <!-- Динамический фон -->
-        <div class="bg-image"></div>
-        <div class="bg-overlay"></div>
-
-        <!-- Контент (заголовок и выбранная тема) -->
-        <div class="content-wrapper">
-            <div id="reader-view" class="reader-view">
-                <h1 id="reader-title">👋 Добро пожаловать в FPV Лабораторию</h1>
-                <p id="reader-content">Выбери тему в меню слева, чтобы начать изучение.</p>
+    <div class="app-container">
+        <!-- Боковая панель (Слева) -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span>🚁</span> FPV LAB
             </div>
-        </div>
-    </main>
+            <div class="menu-list" id="sidebar-menu">
+                <!-- Сюда загрузится структура из app.js -->
+            </div>
+        </aside>
 
+        <!-- Основная область (Справа) -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <h1 id="reader-title">Добро пожаловать</h1>
+                <p id="reader-content">Выберите тему в меню слева, чтобы начать.</p>
+            </div>
+        </main>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
