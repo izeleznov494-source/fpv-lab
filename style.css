@@ -1,160 +1,27 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-body {
-    background-color: #050810;
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.1), transparent 60%),
-        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 30px 30px, 30px 30px;
-    color: #e2e8f0;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 15px 40px 15px;
-}
-
-/* Шапка */
-#main-header { margin-bottom: 25px; }
-
-.hero-section {
-    width: 100%;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    background: linear-gradient(180deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
-    border-bottom: 2px solid #00e5ff;
-    box-shadow: 0 10px 20px -10px rgba(0, 229, 255, 0.3);
-}
-
-.hero-content { text-align: center; }
-
-.drone-icon {
-    font-size: 32px;
-    margin-bottom: 5px;
-    filter: drop-shadow(0 0 10px #00e5ff);
-}
-
-.hero-text {
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: 8px;
-    color: #fff;
-    text-shadow: 0 0 10px #00e5ff;
-}
-
-.hero-subtext {
-    font-size: 10px;
-    color: #00e5ff;
-    letter-spacing: 4px;
-    margin-top: 5px;
-}
-
-h1 {
-    font-size: 26px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 5px;
-    text-align: left;
-    border-left: 4px solid #00e5ff;
-    padding-left: 10px;
-}
-
-.subtitle {
-    color: #64748b;
-    font-size: 13px;
-    text-align: left;
-    padding-left: 14px;
-    margin-bottom: 25px;
-}
-
-/* Плашки (Папки) */
-.folder {
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 229, 255, 0.15);
-    border-radius: 8px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.folder:hover {
-    border-color: rgba(0, 229, 255, 0.6);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-.folder-header {
-    padding: 16px 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-weight: 700;
-    font-size: 15px;
-    color: #e2e8f0;
-}
-
-.folder-header .arrow {
-    margin-left: auto;
-    transition: transform 0.3s ease;
-    color: #00e5ff;
-    font-size: 12px;
-}
-
-.folder.open > .folder-header .arrow {
-    transform: rotate(90deg);
-}
-
-.folder-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-/* Документы (файлы) */
-.doc {
-    padding: 14px 20px 14px 45px;
-    color: #94a3b8;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(0, 229, 255, 0.05);
-    transition: all 0.2s;
-}
-
-.doc:hover {
-    color: #00e5ff;
-    background: rgba(0, 229, 255, 0.08);
-    padding-left: 50px;
-}
-
-.doc span:first-child {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border: 1px solid rgba(0, 229, 255, 0.4);
-    border-radius: 2px;
-    transition: all 0.2s;
-}
-
-.doc:hover span:first-child {
-    background: #00e5ff;
-    box-shadow: 0 0 10px #00e5ff;
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FPV Лаборатория</title>
+    <link rel="stylesheet" href="styles.css"> <!-- ВАЖНО: styles.css с буквой S -->
+</head>
+<body>
+    <div class="app-container">
+        <header id="main-header">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="drone-icon">🚁</div>
+                    <div class="hero-text">FPV SYSTEM</div>
+                    <div class="hero-subtext">ONLINE & READY</div>
+                </div>
+            </div>
+            <h1>🔬 FPV Лаборатория</h1>
+            <p class="subtitle">База знаний и инструкции</p>
+        </header>
+        
+        <main id="app"></main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
