@@ -7,130 +7,141 @@
 }
 
 body {
-    /* Тёмно-синий фон как в Telegram */
+    /* Тёмный фон как в Telegram */
     background-color: #0e1621; 
     color: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
+/* Убираем центрирование, делаем на весь экран */
 .app-container {
-    max-width: 800px;
+    width: 100%;
+    max-width: 1200px; /* Широкий контейнер для больших экранов */
     margin: 0 auto;
-    padding: 0;
-    background-color: #17212b; /* Цвет панели чатов */
+    padding: 20px 40px; /* Отступы по краям */
+    background-color: #17212b;
     min-height: 100vh;
 }
 
 /* Шапка */
 #main-header {
     background-color: #17212b;
-    padding: 20px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #242f3d;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    margin-bottom: 20px;
 }
 
 .hero-section h1 {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 700;
     color: #ffffff;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .hero-subtext {
     color: #7f91a4;
-    font-size: 14px;
+    font-size: 16px;
 }
 
-/* Плашки папок (как чаты в ТГ) */
+/* Сетка для папок (чтобы разнести на несколько экранов) */
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Расстояние между плашками */
+}
+
+/* Папки */
 .folder {
-    background-color: #17212b;
-    border-bottom: 1px solid #242f3d;
-    transition: background 0.2s;
+    background-color: #1c2733; /* Чуть светлее фона */
+    border: 1px solid #242f3d;
+    border-radius: 8px; /* Скругленные углы */
+    overflow: hidden;
+    transition: all 0.2s;
 }
 
 .folder:hover {
-    background-color: #202b36;
+    border-color: #64b5f6; /* Синий акцент */
+    box-shadow: 0 0 15px rgba(100, 181, 246, 0.1);
 }
 
 .folder-header {
-    padding: 12px 16px;
+    padding: 18px 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 15px;
-    font-weight: 500;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 18px;
     color: #ffffff;
+    transition: background 0.2s;
 }
 
-/* Аватарка папки (как кружок в ТГ) */
-.folder-header::before {
-    content: '📁'; /* Или можно использовать букву */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 46px;
-    height: 46px;
-    background: linear-gradient(135deg, #2b5278, #1c3b5e);
-    border-radius: 50%;
-    font-size: 20px;
-    flex-shrink: 0;
+.folder-header:hover {
+    background-color: #202b36;
+}
+
+/* Убираем иконки папок, оставляем стрелку */
+.folder-header span:first-child {
+    display: none;
 }
 
 .folder-header .arrow {
     margin-left: auto;
-    transition: transform 0.3s ease;
-    color: #7f91a4;
-    font-size: 14px;
+    color: #64b5f6;
+    font-size: 16px;
+    transition: transform 0.3s;
 }
 
 .folder.open > .folder-header .arrow {
     transform: rotate(90deg);
 }
 
+/* Контент внутри (документы) */
 .folder-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    background-color: #0e1621; /* Более темный фон для вложенности */
+    transition: max-height 0.4s ease-out;
+    background-color: #0e1621;
 }
 
-/* Документы (как сообщения) */
+/* Документы */
 .doc {
-    padding: 14px 16px 14px 77px;
-    color: #ffffff;
+    padding: 16px 24px 16px 60px;
+    color: #a1a1aa;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 15px;
+    font-size: 16px;
     border-bottom: 1px solid #242f3d;
-    transition: background 0.2s;
-    position: relative;
+    transition: all 0.2s;
+}
+
+.doc:last-child {
+    border-bottom: none;
 }
 
 .doc:hover {
+    color: #ffffff;
     background-color: #202b36;
+    padding-left: 65px;
 }
 
-/* Аватарка документа (маленькая) */
-.doc::before {
-    content: '📄';
-    position: absolute;
-    left: 20px;
-    font-size: 16px;
-    color: #7f91a4;
-}
-
-/* Убираем старые квадратики, так как теперь есть иконки */
+/* Убираем старые квадратики, если остались */
 .doc span:first-child {
     display: none;
 }
 
-/* Сдвиг для вложенных папок (если нужно) */
-.folder .folder {
-    padding-left: 10px;
+/* Адаптив для телефонов */
+@media (max-width: 600px) {
+    .app-container {
+        padding: 15px;
+    }
+    .hero-section h1 {
+        font-size: 24px;
+    }
+    .folder-header {
+        font-size: 16px;
+        padding: 15px 20px;
+    }
 }
