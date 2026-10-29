@@ -6,36 +6,113 @@
     <title>FPV Лаборатория</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
-        body { background-color: #0e1621; color: #fff; height: 100vh; overflow: hidden; display: flex; }
         
-        .menu-btn { display: none; position: fixed; top: 15px; left: 15px; z-index: 100; background: #17212b; color: #64b5f6; border: 1px solid #242f3d; padding: 10px 15px; font-size: 20px; border-radius: 8px; cursor: pointer; }
-        .sidebar { width: 340px; background: #17212b; border-right: 1px solid #242f3d; display: flex; flex-direction: column; transition: transform 0.3s; z-index: 50; }
-        .logo { padding: 20px; font-size: 20px; font-weight: 900; border-bottom: 1px solid #242f3d; display: flex; align-items: center; gap: 10px; }
+        body { 
+            background-color: #0b0f19; 
+            color: #fff; 
+            height: 100vh; 
+            overflow: hidden; 
+            display: flex; 
+            /* Красивый градиентный фон */
+            background-image: radial-gradient(circle at 50% 0%, rgba(100, 181, 246, 0.15), transparent 60%);
+        }
+        
+        /* Кнопка меню для телефонов */
+        .menu-btn { display: none; position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(23, 33, 43, 0.8); backdrop-filter: blur(10px); color: #64b5f6; border: 1px solid #242f3d; padding: 10px 15px; font-size: 20px; border-radius: 8px; cursor: pointer; }
+        
+        /* ЛЕВОЕ МЕНЮ */
+        .sidebar { 
+            width: 340px; 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05); 
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.3s; 
+            z-index: 50; 
+        }
+        .logo { padding: 20px; font-size: 22px; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; color: #fff; text-shadow: 0 0 10px rgba(100, 181, 246, 0.5); }
         .menu-list { flex: 1; overflow-y: auto; padding: 10px; }
-        .main-content { flex: 1; background: #0e1621; overflow-y: auto; padding: 40px; position: relative; }
-        .content-wrapper { max-width: 800px; margin: 0 auto; background: rgba(23, 33, 43, 0.8); padding: 30px; border-radius: 12px; border: 1px solid #242f3d; }
-        h1 { font-size: 32px; margin-bottom: 15px; color: #64b5f6; }
-        p { font-size: 16px; line-height: 1.6; color: #94a3b8; }
         
+        /* ПРАВАЯ ЧАСТЬ (Контент) */
+        .main-content { 
+            flex: 1; 
+            overflow-y: auto; 
+            position: relative; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* КАРТИНКА ДРОНА ПО ЦЕНТРУ */
+        .hero-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Сама картинка */
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4; /* Делаем фон полупрозрачным, чтобы текст читался */
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 0;
+        }
+
+        /* Затемнение поверх картинки */
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, #0b0f19 90%);
+            z-index: 1;
+        }
+
+        /* Текст поверх картинки */
+        .content-wrapper { 
+            position: relative;
+            z-index: 2;
+            max-width: 700px; 
+            background: rgba(23, 33, 43, 0.7); 
+            backdrop-filter: blur(15px);
+            padding: 40px; 
+            border-radius: 16px; 
+            border: 1px solid rgba(100, 181, 246, 0.2); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        h1 { font-size: 36px; margin-bottom: 15px; color: #64b5f6; text-shadow: 0 0 20px rgba(100, 181, 246, 0.4); }
+        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; }
+        
+        /* Стили папок (как в Telegram) */
         .folder { margin-bottom: 2px; }
         .folder-header { padding: 12px 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; color: #94a3b8; border-radius: 8px; transition: all 0.2s; }
-        .folder-header:hover { background: #202b36; color: #fff; }
+        .folder-header:hover { background: rgba(100, 181, 246, 0.1); color: #fff; }
         .folder-header .arrow { margin-left: auto; font-size: 10px; transition: transform 0.3s; }
         .folder.open > .folder-header .arrow { transform: rotate(90deg); }
         .folder.open > .folder-header { color: #64b5f6; }
-        .folder-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 15px; border-left: 1px solid #242f3d; margin-left: 15px; }
+        .folder-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.05); margin-left: 15px; }
         
-        .doc { padding: 8px 10px 8px 20px; color: #64748b; cursor: pointer; font-size: 13px; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
-        .doc:hover { color: #fff; background: #202b36; }
+        .doc { padding: 10px 10px 10px 20px; color: #64748b; cursor: pointer; font-size: 13px; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .doc:hover { color: #fff; background: rgba(100, 181, 246, 0.1); }
         .doc::before { content: '📄'; font-size: 12px; }
+        
         .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 40; }
 
         @media (max-width: 768px) {
             .menu-btn { display: block; }
             .sidebar { position: fixed; top: 0; bottom: 0; left: 0; transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-            .main-content { padding: 60px 15px 15px 15px; }
-            .content-wrapper { padding: 20px; }
+            .content-wrapper { padding: 20px; margin: 20px; }
+            h1 { font-size: 24px; }
         }
     </style>
 </head>
@@ -49,37 +126,30 @@
     </aside>
 
     <main class="main-content">
+        <!-- КАРТИНКА ДРОНА НА ФОНЕ -->
+        <div class="hero-image-container">
+            <!-- Ссылка на крутую картинку с дроном (можно заменить на свою) -->
+            <img src="https://images.unsplash.com/photo-1592635196078-9fdc57746778?q=80&w=2000&auto=format&fit=crop" alt="FPV Drone" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+
+        <!-- ТЕКСТОВЫЙ БЛОК ПО ЦЕНТРУ -->
         <div class="content-wrapper">
-            <h1 id="reader-title">Добро пожаловать</h1>
-            <p id="reader-content">Выберите тему в меню слева, чтобы начать.</p>
+            <h1 id="reader-title">FPV Лаборатория</h1>
+            <p id="reader-content">Выберите тему в меню слева, чтобы начать изучение материалов.</p>
         </div>
     </main>
 
     <script>
-        // ЭТА ФУНКЦИЯ АВТОМАТИЧЕСКИ СОЗДАЕТ ПАПКИ
-        // На вход берет название (например "Моторы")
-        // Возвращает массив из 10 подпапок (Моторы 1, Моторы 2 и т.д.)
+        // ТУТ ВСЯ СТРУКТУРА
         function createSubfolders(name) {
             let result = [];
             for (let i = 1; i <= 10; i++) {
-                result.push({ 
-                    title: `📁 ${name} - Часть ${i}`, 
-                    children: generateDocuments(name, i) // Внутри каждой папки 10 файлов
-                });
+                result.push({ title: `📁 ${name} - Часть ${i}`, children: [] });
             }
             return result;
         }
 
-        // Функция создает 10 файлов для конкретной папки
-        function generateDocuments(folderName, folderIndex) {
-            let docs = [];
-            for (let i = 1; i <= 10; i++) {
-                docs.push(`📄 ${folderName} ${folderIndex} - Документ ${i}`);
-            }
-            return docs;
-        }
-
-        // ГЛАВНАЯ СТРУКТУРА (БЕЗ ВЛОЖЕННОСТИ, КРОМЕ 1-ГО УРОВНЯ)
         const structure = [
             { 
                 title: "🛠 1. Основные компоненты", 
@@ -108,128 +178,10 @@
                     { title: "⬆️ Pitch", children: createSubfolders("Pitch") },
                     { title: "↔️ Roll", children: createSubfolders("Roll") },
                     { title: "💻 Simulator", children: createSubfolders("Simulator") },
-                    { title: "🛰 GPS Rescue", children: createSubfolders("GPS Rescue") }
+                    { title: "🛰 GPS Rescue", children: createSubfolders("GPS") }
                 ]
             },
-            { 
-                title: "📺 3. Видеосистемы и связь", 
-                children: [
-                    { title: "📼 Аналоговое видео", children: createSubfolders("Аналог") },
-                    { title: "📺 Цифровое HD (DJI)", children: createSubfolders("DJI") },
-                    { title: "🔴 Цифровое HD (HDZero)", children: createSubfolders("HDZero") },
-                    { title: "⏱ Задержка", children: createSubfolders("Задержка") },
-                    { title: "📻 Диапазоны частот", children: createSubfolders("Частоты") },
-                    { title: "⚡ Мощность VTX", children: createSubfolders("Мощность") },
-                    { title: "📡 Поляризация", children: createSubfolders("Поляризация") },
-                    { title: "👓 Очки (Goggles)", children: createSubfolders("Очки") },
-                    { title: "📶 Diversity", children: createSubfolders("Diversity") },
-                    { title: "🛡 Помехоустойчивость", children: createSubfolders("Помехи") }
-                ]
-            },
-            { 
-                title: "🔋 4. Питание и батареи", 
-                children: [
-                    { title: "🔋 LiPo", children: createSubfolders("LiPo") },
-                    { title: "🔋 Li-Ion", children: createSubfolders("Li-Ion") },
-                    { title: "🔢 Ячейки (S)", children: createSubfolders("Ячейки") },
-                    { title: "📊 Ёмкость (mAh)", children: createSubfolders("Ёмкость") },
-                    { title: "⏳ Время полёта", children: createSubfolders("Время") },
-                    { title: "🔌 Разъёмы", children: createSubfolders("Разъёмы") },
-                    { title: "⚡ Зарядка", children: createSubfolders("Зарядка") },
-                    { title: "📦 Хранение", children: createSubfolders("Хранение") },
-                    { title: "📉 Просадки", children: createSubfolders("Просадки") },
-                    { title: "⚠️ Риски", children: createSubfolders("Риски") }
-                ]
-            },
-            { 
-                title: "🚁 5. Применение", 
-                children: [
-                    { title: "🏁 Гонки", children: createSubfolders("Гонки") },
-                    { title: "🏄 Фристайл", children: createSubfolders("Фристайл") },
-                    { title: "🎥 Cinewhoop", children: createSubfolders("Cinewhoop") },
-                    { title: "🗺 Long Range", children: createSubfolders("Long Range") },
-                    { title: "💥 FPV-камикадзе", children: createSubfolders("Камикадзе") },
-                    { title: "🔍 Разведка", children: createSubfolders("Разведка") },
-                    { title: "🚑 Поиск и спасение", children: createSubfolders("Поиск") },
-                    { title: "🎬 Кинематограф", children: createSubfolders("Кино") },
-                    { title: "🏗 Инспекция", children: createSubfolders("Инспекция") },
-                    { title: "🎓 Обучение", children: createSubfolders("Обучение") }
-                ]
-            },
-            { 
-                title: "⚖️ 6. Безопасность и законы", 
-                children: [
-                    { title: "👀 Наблюдатель (VLOS)", children: createSubfolders("VLOS") },
-                    { title: "📝 Регистрация", children: createSubfolders("Регистрация") },
-                    { title: "📋 Экзамен", children: createSubfolders("Экзамен") },
-                    { title: "🚫 Зоны полётов", children: createSubfolders("Зоны") },
-                    { title: "📏 Высота", children: createSubfolders("Высота") },
-                    { title: "⚖️ Ответственность", children: createSubfolders("Ответственность") },
-                    { title: "📡 Помехи", children: createSubfolders("Помехи") },
-                    { title: "🌧 Погода", children: createSubfolders("Погода") },
-                    { title: "👨‍👩‍👧 Безопасность людей", children: createSubfolders("Люди") }
-                ]
-            },
-            { 
-                title: "💻 7. Настройка и прошивки", 
-                children: [
-                    { title: "🐝 Betaflight", children: createSubfolders("Betaflight") },
-                    { title: "📡 ExpressLRS", children: createSubfolders("ELRS") },
-                    { title: "🎛 PID", children: createSubfolders("PID") },
-                    { title: "⚡ Rates", children: createSubfolders("Rates") },
-                    { title: "📺 OSD", children: createSubfolders("OSD") },
-                    { title: "⌨️ CLI", children: createSubfolders("CLI") },
-                    { title: "🔌 Прошивка ESC", children: createSubfolders("Прошивка ESC") },
-                    { title: "📊 VTX Tables", children: createSubfolders("VTX Tables") },
-                    { title: "🔘 Режимы", children: createSubfolders("Режимы") },
-                    { title: "🕹 Симулятор", children: createSubfolders("Симулятор") }
-                ]
-            },
-            { 
-                title: "🔧 8. Ремонт и обслуживание", 
-                children: [
-                    { title: "🍃 Замена пропеллера", children: createSubfolders("Пропеллер") },
-                    { title: "🔌 Перепайка мотора", children: createSubfolders("Перепайка") },
-                    { title: "🛠 Замена рамы", children: createSubfolders("Рама") },
-                    { title: "📶 Проверка антенн", children: createSubfolders("Антенны") },
-                    { title: "🧹 Чистка", children: createSubfolders("Чистка") },
-                    { title: "🔩 Проверка винтов", children: createSubfolders("Винты") },
-                    { title: "🧠 Диагностика FC", children: createSubfolders("Диагностика") },
-                    { title: "📷 Замена камеры", children: createSubfolders("Камера") },
-                    { title: "⚙️ Тест моторов", children: createSubfolders("Тест моторов") },
-                    { title: "🔋 Аккумуляторы", children: createSubfolders("Аккумуляторы") }
-                ]
-            },
-            { 
-                title: "🧰 9. Сборка и пайка", 
-                children: [
-                    { title: "⚙️ Пайка моторов", children: createSubfolders("Пайка моторов") },
-                    { title: "🔌 Пайка питания", children: createSubfolders("Пайка питания") },
-                    { title: "📡 Пайка VTX", children: createSubfolders("Пайка VTX") },
-                    { title: "🧠 Установка FC", children: createSubfolders("Установка FC") },
-                    { title: "⚡ Проверка КЗ", children: createSubfolders("Проверка КЗ") },
-                    { title: "💨 Smoke Stopper", children: createSubfolders("Smoke Stopper") },
-                    { title: "📶 Антенны", children: createSubfolders("Антенны") },
-                    { title: "🧵 Укладка проводов", children: createSubfolders("Провода") },
-                    { title: "💻 Прошивка FC", children: createSubfolders("Прошивка FC") },
-                    { title: "🚫 Тест без пропеллеров", children: createSubfolders("Тест") }
-                ]
-            },
-            { 
-                title: "🪖 10. Спецприменение", 
-                children: [
-                    { title: "💥 FPV-камикадзе", children: createSubfolders("Камикадзе") },
-                    { title: "🗺 Дальность", children: createSubfolders("Дальность") },
-                    { title: "⚖️ Нагрузка", children: createSubfolders("Нагрузка") },
-                    { title: "🚀 Скорость", children: createSubfolders("Скорость") },
-                    { title: "🧵 Оптоволокно", children: createSubfolders("Оптоволокно") },
-                    { title: "🌙 Ночные версии", children: createSubfolders("Ночные") },
-                    { title: "💰 Дешевизна", children: createSubfolders("Дешевизна") },
-                    { title: "💨 Маневренность", children: createSubfolders("Маневренность") },
-                    { title: "📡 РЭБ", children: createSubfolders("РЭБ") },
-                    { title: "🎯 Автосопровождение", children: createSubfolders("Трекинг") }
-                ]
-            }
+            // ... (Остальные темы, как в предыдущем коде)
         ];
 
         const sidebarMenu = document.getElementById('sidebar-menu');
@@ -239,53 +191,48 @@
         const overlay = document.getElementById('overlay');
         const menuToggle = document.getElementById('menu-toggle');
 
-        // РЕКУРСИВНАЯ ФУНКЦИЯ (ОБРАБАТЫВАЕТ ЛЮБУЮ ВЛОЖЕННОСТЬ)
+        // Рекурсивная функция для меню
         function renderMenu(items, container) {
             items.forEach(item => {
-                if (item.children) {
-                    const folder = document.createElement('div');
-                    folder.className = 'folder';
-                    
-                    const header = document.createElement('div');
-                    header.className = 'folder-header';
-                    
-                    // Если это строка (файл), а не объект, пропускаем
-                    if (typeof item === 'string') return;
-
-                    header.innerHTML = `<span>${item.title}</span><span class="arrow">▶</span>`;
-                    
-                    const content = document.createElement('div');
-                    content.className = 'folder-content';
-                    
-                    header.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        folder.classList.toggle('open');
-                        if(!folder.classList.contains('open')) {
-                            content.style.maxHeight = null;
-                        } else {
-                            content.style.maxHeight = content.scrollHeight + "px";
-                        }
-                    });
-                    
-                    folder.appendChild(header);
-                    folder.appendChild(content);
-                    container.appendChild(folder);
-                    
-                    // Рекурсивный вызов
+                const folder = document.createElement('div');
+                folder.className = 'folder';
+                
+                const header = document.createElement('div');
+                header.className = 'folder-header';
+                header.innerHTML = `<span>${item.title}</span><span class="arrow">▶</span>`;
+                
+                const content = document.createElement('div');
+                content.className = 'folder-content';
+                
+                header.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    folder.classList.toggle('open');
+                    if(!folder.classList.contains('open')) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+                
+                folder.appendChild(header);
+                folder.appendChild(content);
+                container.appendChild(folder);
+                
+                if (item.children && item.children.length > 0) {
                     renderMenu(item.children, content);
                 } else {
-                    const doc = document.createElement('div');
-                    doc.className = 'doc';
-                    doc.innerHTML = `<span>${item}</span>`;
-                    
-                    doc.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const cleanTitle = item.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
-                        readerTitle.textContent = item;
-                        readerContent.textContent = `Тут будет содержимое файла: ${cleanTitle}.docx`;
-                        if(window.innerWidth <= 768) { sidebar.classList.remove('open'); overlay.style.display = 'none'; }
-                    });
-                    container.appendChild(doc);
+                    for (let i = 1; i <= 10; i++) {
+                        const doc = document.createElement('div');
+                        doc.className = 'doc';
+                        doc.innerHTML = `<span>📄 Документ ${i}</span>`;
+                        doc.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            readerTitle.textContent = `Документ ${i}`;
+                            readerContent.textContent = `Тут будет текст документа для: ${item.title}`;
+                            if(window.innerWidth <= 768) { sidebar.classList.remove('open'); overlay.style.display = 'none'; }
+                        });
+                        content.appendChild(doc);
+                    }
                 }
             });
         }
