@@ -56,164 +56,178 @@
     </main>
 
     <script>
-        // Функция для генерации 10 подпапок с документами
-        function generateSubfolders(subfolderName) {
-            const docs = [];
+        // ЭТА ФУНКЦИЯ АВТОМАТИЧЕСКИ СОЗДАЕТ ПАПКИ
+        // На вход берет название (например "Моторы")
+        // Возвращает массив из 10 подпапок (Моторы 1, Моторы 2 и т.д.)
+        function createSubfolders(name) {
+            let result = [];
             for (let i = 1; i <= 10; i++) {
-                docs.push(`${subfolderName} - Документ ${i}`);
+                result.push({ 
+                    title: `📁 ${name} - Часть ${i}`, 
+                    children: generateDocuments(name, i) // Внутри каждой папки 10 файлов
+                });
+            }
+            return result;
+        }
+
+        // Функция создает 10 файлов для конкретной папки
+        function generateDocuments(folderName, folderIndex) {
+            let docs = [];
+            for (let i = 1; i <= 10; i++) {
+                docs.push(`📄 ${folderName} ${folderIndex} - Документ ${i}`);
             }
             return docs;
         }
 
-        // ГЛАВНАЯ СТРУКТУРА
+        // ГЛАВНАЯ СТРУКТУРА (БЕЗ ВЛОЖЕННОСТИ, КРОМЕ 1-ГО УРОВНЯ)
         const structure = [
             { 
                 title: "🛠 1. Основные компоненты", 
                 children: [
-                    { title: "📦 Рама", children: generateSubfolders("Рама") },
-                    { title: "⚙️ Моторы", children: generateSubfolders("Моторы") },
-                    { title: "🔌 ESC", children: generateSubfolders("ESC") },
-                    { title: "🧠 FC", children: generateSubfolders("FC") },
-                    { title: "📡 VTX", children: generateSubfolders("VTX") },
-                    { title: "📷 FPV-камера", children: generateSubfolders("Камера") },
-                    { title: "📻 Приёмник", children: generateSubfolders("Приёмник") },
-                    { title: "📶 Антенны", children: generateSubfolders("Антенны") },
-                    { title: "🍃 Пропеллеры", children: generateSubfolders("Пропеллеры") },
-                    { title: "🔋 PDB / BEC", children: generateSubfolders("PDB") }
+                    { title: "📦 Рама", children: createSubfolders("Рама") },
+                    { title: "⚙️ Моторы", children: createSubfolders("Моторы") },
+                    { title: "🔌 ESC", children: createSubfolders("ESC") },
+                    { title: "🧠 FC", children: createSubfolders("FC") },
+                    { title: "📡 VTX", children: createSubfolders("VTX") },
+                    { title: "📷 FPV-камера", children: createSubfolders("Камера") },
+                    { title: "📻 Приёмник", children: createSubfolders("Приёмник") },
+                    { title: "📶 Антенны", children: createSubfolders("Антенны") },
+                    { title: "🍃 Пропеллеры", children: createSubfolders("Пропеллеры") },
+                    { title: "🔋 PDB / BEC", children: createSubfolders("PDB") }
                 ]
             },
             { 
                 title: "🎮 2. Полётные режимы", 
                 children: [
-                    { title: "📐 Angle Mode", children: generateSubfolders("Angle Mode") },
-                    { title: "🌅 Horizon Mode", children: generateSubfolders("Horizon Mode") },
-                    { title: "🔄 Acro Mode", children: generateSubfolders("Acro Mode") },
-                    { title: "🕊 Air Mode", children: generateSubfolders("Air Mode") },
-                    { title: "🚀 Throttle", children: generateSubfolders("Throttle") },
-                    { title: "↩️ Yaw", children: generateSubfolders("Yaw") },
-                    { title: "⬆️ Pitch", children: generateSubfolders("Pitch") },
-                    { title: "↔️ Roll", children: generateSubfolders("Roll") },
-                    { title: "💻 Simulator", children: generateSubfolders("Simulator") },
-                    { title: "🛰 GPS Rescue", children: generateSubfolders("GPS Rescue") }
+                    { title: "📐 Angle Mode", children: createSubfolders("Angle") },
+                    { title: "🌅 Horizon Mode", children: createSubfolders("Horizon") },
+                    { title: "🔄 Acro Mode", children: createSubfolders("Acro") },
+                    { title: "🕊 Air Mode", children: createSubfolders("Air Mode") },
+                    { title: "🚀 Throttle", children: createSubfolders("Throttle") },
+                    { title: "↩️ Yaw", children: createSubfolders("Yaw") },
+                    { title: "⬆️ Pitch", children: createSubfolders("Pitch") },
+                    { title: "↔️ Roll", children: createSubfolders("Roll") },
+                    { title: "💻 Simulator", children: createSubfolders("Simulator") },
+                    { title: "🛰 GPS Rescue", children: createSubfolders("GPS Rescue") }
                 ]
             },
             { 
                 title: "📺 3. Видеосистемы и связь", 
                 children: [
-                    { title: "📼 Аналоговое видео", children: generateSubfolders("Аналоговое видео") },
-                    { title: "📺 Цифровое HD (DJI)", children: generateSubfolders("DJI") },
-                    { title: "🔴 Цифровое HD (HDZero)", children: generateSubfolders("HDZero") },
-                    { title: "⏱ Задержка", children: generateSubfolders("Задержка") },
-                    { title: "📻 Диапазоны частот", children: generateSubfolders("Частоты") },
-                    { title: "⚡ Мощность VTX", children: generateSubfolders("Мощность") },
-                    { title: "📡 Поляризация", children: generateSubfolders("Поляризация") },
-                    { title: "👓 Очки (Goggles)", children: generateSubfolders("Очки") },
-                    { title: "📶 Diversity", children: generateSubfolders("Diversity") },
-                    { title: "🛡 Помехоустойчивость", children: generateSubfolders("Помехи") }
+                    { title: "📼 Аналоговое видео", children: createSubfolders("Аналог") },
+                    { title: "📺 Цифровое HD (DJI)", children: createSubfolders("DJI") },
+                    { title: "🔴 Цифровое HD (HDZero)", children: createSubfolders("HDZero") },
+                    { title: "⏱ Задержка", children: createSubfolders("Задержка") },
+                    { title: "📻 Диапазоны частот", children: createSubfolders("Частоты") },
+                    { title: "⚡ Мощность VTX", children: createSubfolders("Мощность") },
+                    { title: "📡 Поляризация", children: createSubfolders("Поляризация") },
+                    { title: "👓 Очки (Goggles)", children: createSubfolders("Очки") },
+                    { title: "📶 Diversity", children: createSubfolders("Diversity") },
+                    { title: "🛡 Помехоустойчивость", children: createSubfolders("Помехи") }
                 ]
             },
             { 
                 title: "🔋 4. Питание и батареи", 
                 children: [
-                    { title: "🔋 LiPo", children: generateSubfolders("LiPo") },
-                    { title: "🔋 Li-Ion", children: generateSubfolders("Li-Ion") },
-                    { title: "🔢 Ячейки (S)", children: generateSubfolders("Ячейки") },
-                    { title: "📊 Ёмкость (mAh)", children: generateSubfolders("Ёмкость") },
-                    { title: "⏳ Время полёта", children: generateSubfolders("Время") },
-                    { title: "🔌 Разъёмы", children: generateSubfolders("Разъёмы") },
-                    { title: "⚡ Зарядка", children: generateSubfolders("Зарядка") },
-                    { title: "📦 Хранение", children: generateSubfolders("Хранение") },
-                    { title: "📉 Просадки напряжения", children: generateSubfolders("Просадки") },
-                    { title: "⚠️ Риски", children: generateSubfolders("Риски") }
+                    { title: "🔋 LiPo", children: createSubfolders("LiPo") },
+                    { title: "🔋 Li-Ion", children: createSubfolders("Li-Ion") },
+                    { title: "🔢 Ячейки (S)", children: createSubfolders("Ячейки") },
+                    { title: "📊 Ёмкость (mAh)", children: createSubfolders("Ёмкость") },
+                    { title: "⏳ Время полёта", children: createSubfolders("Время") },
+                    { title: "🔌 Разъёмы", children: createSubfolders("Разъёмы") },
+                    { title: "⚡ Зарядка", children: createSubfolders("Зарядка") },
+                    { title: "📦 Хранение", children: createSubfolders("Хранение") },
+                    { title: "📉 Просадки", children: createSubfolders("Просадки") },
+                    { title: "⚠️ Риски", children: createSubfolders("Риски") }
                 ]
             },
             { 
                 title: "🚁 5. Применение", 
                 children: [
-                    { title: "🏁 Гонки", children: generateSubfolders("Гонки") },
-                    { title: "🏄 Фристайл", children: generateSubfolders("Фристайл") },
-                    { title: "🎥 Cinewhoop", children: generateSubfolders("Cinewhoop") },
-                    { title: "🗺 Long Range", children: generateSubfolders("Long Range") },
-                    { title: "💥 FPV-камикадзе", children: generateSubfolders("Камикадзе") },
-                    { title: "🔍 Разведка", children: generateSubfolders("Разведка") },
-                    { title: "🚑 Поиск и спасение", children: generateSubfolders("Поиск") },
-                    { title: "🎬 Кинематограф", children: generateSubfolders("Кино") },
-                    { title: "🏗 Инспекция", children: generateSubfolders("Инспекция") },
-                    { title: "🎓 Обучение", children: generateSubfolders("Обучение") }
+                    { title: "🏁 Гонки", children: createSubfolders("Гонки") },
+                    { title: "🏄 Фристайл", children: createSubfolders("Фристайл") },
+                    { title: "🎥 Cinewhoop", children: createSubfolders("Cinewhoop") },
+                    { title: "🗺 Long Range", children: createSubfolders("Long Range") },
+                    { title: "💥 FPV-камикадзе", children: createSubfolders("Камикадзе") },
+                    { title: "🔍 Разведка", children: createSubfolders("Разведка") },
+                    { title: "🚑 Поиск и спасение", children: createSubfolders("Поиск") },
+                    { title: "🎬 Кинематограф", children: createSubfolders("Кино") },
+                    { title: "🏗 Инспекция", children: createSubfolders("Инспекция") },
+                    { title: "🎓 Обучение", children: createSubfolders("Обучение") }
                 ]
             },
             { 
                 title: "⚖️ 6. Безопасность и законы", 
                 children: [
-                    { title: "👀 Наблюдатель (VLOS)", children: generateSubfolders("VLOS") },
-                    { title: "📝 Регистрация", children: generateSubfolders("Регистрация") },
-                    { title: "📋 Экзамен", children: generateSubfolders("Экзамен") },
-                    { title: "🚫 Зоны полётов", children: generateSubfolders("Зоны") },
-                    { title: "📏 Высота", children: generateSubfolders("Высота") },
-                    { title: "⚖️ Ответственность", children: generateSubfolders("Ответственность") },
-                    { title: "📡 Помехи", children: generateSubfolders("Помехи") },
-                    { title: "🌧 Погода", children: generateSubfolders("Погода") },
-                    { title: "👨‍👩‍👧 Безопасность людей", children: generateSubfolders("Люди") }
+                    { title: "👀 Наблюдатель (VLOS)", children: createSubfolders("VLOS") },
+                    { title: "📝 Регистрация", children: createSubfolders("Регистрация") },
+                    { title: "📋 Экзамен", children: createSubfolders("Экзамен") },
+                    { title: "🚫 Зоны полётов", children: createSubfolders("Зоны") },
+                    { title: "📏 Высота", children: createSubfolders("Высота") },
+                    { title: "⚖️ Ответственность", children: createSubfolders("Ответственность") },
+                    { title: "📡 Помехи", children: createSubfolders("Помехи") },
+                    { title: "🌧 Погода", children: createSubfolders("Погода") },
+                    { title: "👨‍👩‍👧 Безопасность людей", children: createSubfolders("Люди") }
                 ]
             },
             { 
                 title: "💻 7. Настройка и прошивки", 
                 children: [
-                    { title: "🐝 Betaflight", children: generateSubfolders("Betaflight") },
-                    { title: "📡 ExpressLRS", children: generateSubfolders("ELRS") },
-                    { title: "🎛 PID", children: generateSubfolders("PID") },
-                    { title: "⚡ Rates", children: generateSubfolders("Rates") },
-                    { title: "📺 OSD", children: generateSubfolders("OSD") },
-                    { title: "⌨️ CLI", children: generateSubfolders("CLI") },
-                    { title: "🔌 Прошивка ESC", children: generateSubfolders("Прошивка ESC") },
-                    { title: "📊 VTX Tables", children: generateSubfolders("VTX Tables") },
-                    { title: "🔘 Режимы", children: generateSubfolders("Режимы") },
-                    { title: "🕹 Симулятор", children: generateSubfolders("Симулятор") }
+                    { title: "🐝 Betaflight", children: createSubfolders("Betaflight") },
+                    { title: "📡 ExpressLRS", children: createSubfolders("ELRS") },
+                    { title: "🎛 PID", children: createSubfolders("PID") },
+                    { title: "⚡ Rates", children: createSubfolders("Rates") },
+                    { title: "📺 OSD", children: createSubfolders("OSD") },
+                    { title: "⌨️ CLI", children: createSubfolders("CLI") },
+                    { title: "🔌 Прошивка ESC", children: createSubfolders("Прошивка ESC") },
+                    { title: "📊 VTX Tables", children: createSubfolders("VTX Tables") },
+                    { title: "🔘 Режимы", children: createSubfolders("Режимы") },
+                    { title: "🕹 Симулятор", children: createSubfolders("Симулятор") }
                 ]
             },
             { 
                 title: "🔧 8. Ремонт и обслуживание", 
                 children: [
-                    { title: "🍃 Замена пропеллера", children: generateSubfolders("Пропеллер") },
-                    { title: "🔌 Перепайка мотора", children: generateSubfolders("Перепайка") },
-                    { title: "🛠 Замена рамы", children: generateSubfolders("Рама") },
-                    { title: "📶 Проверка антенн", children: generateSubfolders("Антенны") },
-                    { title: "🧹 Чистка", children: generateSubfolders("Чистка") },
-                    { title: "🔩 Проверка винтов", children: generateSubfolders("Винты") },
-                    { title: "🧠 Диагностика FC", children: generateSubfolders("Диагностика") },
-                    { title: "📷 Замена камеры", children: generateSubfolders("Камера") },
-                    { title: "⚙️ Тест моторов", children: generateSubfolders("Тест моторов") },
-                    { title: "🔋 Аккумуляторы", children: generateSubfolders("Аккумуляторы") }
+                    { title: "🍃 Замена пропеллера", children: createSubfolders("Пропеллер") },
+                    { title: "🔌 Перепайка мотора", children: createSubfolders("Перепайка") },
+                    { title: "🛠 Замена рамы", children: createSubfolders("Рама") },
+                    { title: "📶 Проверка антенн", children: createSubfolders("Антенны") },
+                    { title: "🧹 Чистка", children: createSubfolders("Чистка") },
+                    { title: "🔩 Проверка винтов", children: createSubfolders("Винты") },
+                    { title: "🧠 Диагностика FC", children: createSubfolders("Диагностика") },
+                    { title: "📷 Замена камеры", children: createSubfolders("Камера") },
+                    { title: "⚙️ Тест моторов", children: createSubfolders("Тест моторов") },
+                    { title: "🔋 Аккумуляторы", children: createSubfolders("Аккумуляторы") }
                 ]
             },
             { 
                 title: "🧰 9. Сборка и пайка", 
                 children: [
-                    { title: "⚙️ Пайка моторов", children: generateSubfolders("Пайка моторов") },
-                    { title: "🔌 Пайка питания", children: generateSubfolders("Пайка питания") },
-                    { title: "📡 Пайка VTX", children: generateSubfolders("Пайка VTX") },
-                    { title: "🧠 Установка FC", children: generateSubfolders("Установка FC") },
-                    { title: "⚡ Проверка КЗ", children: generateSubfolders("Проверка КЗ") },
-                    { title: "💨 Smoke Stopper", children: generateSubfolders("Smoke Stopper") },
-                    { title: "📶 Антенны", children: generateSubfolders("Антенны") },
-                    { title: "🧵 Укладка проводов", children: generateSubfolders("Провода") },
-                    { title: "💻 Прошивка FC", children: generateSubfolders("Прошивка FC") },
-                    { title: "🚫 Тест без пропеллеров", children: generateSubfolders("Тест") }
+                    { title: "⚙️ Пайка моторов", children: createSubfolders("Пайка моторов") },
+                    { title: "🔌 Пайка питания", children: createSubfolders("Пайка питания") },
+                    { title: "📡 Пайка VTX", children: createSubfolders("Пайка VTX") },
+                    { title: "🧠 Установка FC", children: createSubfolders("Установка FC") },
+                    { title: "⚡ Проверка КЗ", children: createSubfolders("Проверка КЗ") },
+                    { title: "💨 Smoke Stopper", children: createSubfolders("Smoke Stopper") },
+                    { title: "📶 Антенны", children: createSubfolders("Антенны") },
+                    { title: "🧵 Укладка проводов", children: createSubfolders("Провода") },
+                    { title: "💻 Прошивка FC", children: createSubfolders("Прошивка FC") },
+                    { title: "🚫 Тест без пропеллеров", children: createSubfolders("Тест") }
                 ]
             },
             { 
                 title: "🪖 10. Спецприменение", 
                 children: [
-                    { title: "💥 FPV-камикадзе", children: generateSubfolders("Камикадзе") },
-                    { title: "🗺 Дальность", children: generateSubfolders("Дальность") },
-                    { title: "⚖️ Нагрузка", children: generateSubfolders("Нагрузка") },
-                    { title: "🚀 Скорость", children: generateSubfolders("Скорость") },
-                    { title: "🧵 Оптоволокно", children: generateSubfolders("Оптоволокно") },
-                    { title: "🌙 Ночные версии", children: generateSubfolders("Ночные") },
-                    { title: "💰 Дешевизна", children: generateSubfolders("Дешевизна") },
-                    { title: "💨 Маневренность", children: generateSubfolders("Маневренность") },
-                    { title: "📡 РЭБ", children: generateSubfolders("РЭБ") },
-                    { title: "🎯 Автосопровождение", children: generateSubfolders("Трекинг") }
+                    { title: "💥 FPV-камикадзе", children: createSubfolders("Камикадзе") },
+                    { title: "🗺 Дальность", children: createSubfolders("Дальность") },
+                    { title: "⚖️ Нагрузка", children: createSubfolders("Нагрузка") },
+                    { title: "🚀 Скорость", children: createSubfolders("Скорость") },
+                    { title: "🧵 Оптоволокно", children: createSubfolders("Оптоволокно") },
+                    { title: "🌙 Ночные версии", children: createSubfolders("Ночные") },
+                    { title: "💰 Дешевизна", children: createSubfolders("Дешевизна") },
+                    { title: "💨 Маневренность", children: createSubfolders("Маневренность") },
+                    { title: "📡 РЭБ", children: createSubfolders("РЭБ") },
+                    { title: "🎯 Автосопровождение", children: createSubfolders("Трекинг") }
                 ]
             }
         ];
@@ -225,7 +239,7 @@
         const overlay = document.getElementById('overlay');
         const menuToggle = document.getElementById('menu-toggle');
 
-        // Рекурсивная функция отрисовки меню (теперь может обрабатывать 3 уровня)
+        // РЕКУРСИВНАЯ ФУНКЦИЯ (ОБРАБАТЫВАЕТ ЛЮБУЮ ВЛОЖЕННОСТЬ)
         function renderMenu(items, container) {
             items.forEach(item => {
                 if (item.children) {
@@ -235,9 +249,10 @@
                     const header = document.createElement('div');
                     header.className = 'folder-header';
                     
-                    // Если это верхний уровень (эмодзи уже в названии), выводим как есть
-                    // Для внутренних уровней тоже выводим текст как есть
-                    header.innerHTML = `<span>${item.title.substring(0,2)}</span><span>${item.title.substring(2)}</span><span class="arrow">▶</span>`;
+                    // Если это строка (файл), а не объект, пропускаем
+                    if (typeof item === 'string') return;
+
+                    header.innerHTML = `<span>${item.title}</span><span class="arrow">▶</span>`;
                     
                     const content = document.createElement('div');
                     content.className = 'folder-content';
@@ -256,17 +271,17 @@
                     folder.appendChild(content);
                     container.appendChild(folder);
                     
-                    // Рекурсивный вызов для вложенных папок
+                    // Рекурсивный вызов
                     renderMenu(item.children, content);
                 } else {
                     const doc = document.createElement('div');
                     doc.className = 'doc';
-                    doc.innerHTML = `<span></span> <span>${item.title}</span>`;
+                    doc.innerHTML = `<span>${item}</span>`;
                     
                     doc.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        const cleanTitle = item.title.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
-                        readerTitle.textContent = item.title;
+                        const cleanTitle = item.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
+                        readerTitle.textContent = item;
                         readerContent.textContent = `Тут будет содержимое файла: ${cleanTitle}.docx`;
                         if(window.innerWidth <= 768) { sidebar.classList.remove('open'); overlay.style.display = 'none'; }
                     });
