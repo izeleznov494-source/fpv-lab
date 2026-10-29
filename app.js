@@ -11,7 +11,6 @@ const structure = [
     { title: "10. Спецприменение", children: ["FPV-камикадзе", "Дальность", "Нагрузка", "Скорость", "Оптоволокно", "Ночные версии", "Дешевизна", "Маневренность", "РЭБ", "Автосопровождение"] }
 ];
 
-// ВАЖНО: Твой ник на GitHub и название репозитория
 const githubUser = "izeleznov494-source";
 const repoName = "fpv-lab";
 
@@ -71,23 +70,40 @@ function render(items, container) {
             doc.className = 'doc';
             doc.innerHTML = `<span>📥</span> <span>${item.title}</span>`;
             
-            doc.addEventListener('click', () => {
+            doc.addEventListener('click', async () => {
                 const foundFile = allFiles.find(fileName => 
                     fileName.toLowerCase().startsWith(item.title.toLowerCase())
                 );
 
                 if (foundFile) {
-                    // Формируем прямую ссылку на скачивание (Raw)
-                    const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${foundFile}`;
-                    
-                    const link = document.createElement('a');
-                    link.href = encodeURI(rawUrl); 
-                    link.download = foundFile; 
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                    doc.innerHTML = `<span>⏳</span> <span>Загрузка...</span>`;
+                    try {
+                        // Формируем прямую ссылку на скачивание
+                        const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${encodeURIComponent(foundFile)}`;
+                        
+                        // Скачиваем файл в память (обходя ошибку кодировки)
+                        const response = await fetch(rawUrl);
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        
+                        const blob = await response.blob();
+                        const blobUrl = window.URL.createObjectURL(blob);
+                        
+                        // Отдаем браузеру готовый файл
+                        const link = document.createElement('a');
+                        link.href = blobUrl;
+                        link.download = foundFile;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(blobUrl);
+                        
+                        doc.innerHTML = `<span>✅</span> <span>${item.title}</span>`;
+                    } catch (error) {
+                        alert("Ошибка при скачивании файла. Проверьте интернет.");
+                        doc.innerHTML = `<span>❌</span> <span>${item.title}</span>`;
+                    }
                 } else {
-                    alert(`Файл для "${item.title}" не найден.\nУбедитесь, что название файла на GitHub совпадает с названием пункта.`);
+                    alert(`Файл для "${item.title}" не найден.`);
                 }
             });
             container.appendChild(doc);
