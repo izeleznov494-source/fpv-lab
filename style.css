@@ -1,207 +1,61 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+const structure = [
+    { title: "1. Основные компоненты и архитектура", children: ["Рама", "Моторы", "ESC", "FC", "VTX", "FPV-камера", "Приёмник", "Антенны", "Пропеллеры", "PDB / BEC"] },
+    { title: "2. Полётные режимы и управление", children: ["Angle Mode", "Horizon Mode", "Acro Mode", "Air Mode", "Throttle", "Yaw", "Pitch", "Roll", "Simulator", "GPS Rescue"] },
+    { title: "3. Видеосистемы и связь", children: ["Аналоговое видео", "Цифровое HD (DJI)", "Цифровое HD (HDZero)", "Задержка", "Диапазоны частот", "Мощность VTX", "Поляризация", "Очки (Goggles)", "Diversity", "Помехоустойчивость"] },
+    { title: "4. Питание и аккумуляторы", children: ["LiPo", "Li-Ion", "Ячейки (S)", "Ёмкость (mAh)", "Время полёта", "Разъёмы", "Зарядка", "Хранение", "Просадки напряжения", "Риски"] },
+    { title: "5. Применение", children: ["Гонки", "Фристайл", "Cinewhoop", "Long Range", "FPV-камикадзе", "Разведка", "Поиск и спасение", "Кинематограф", "Инспекция", "Обучение"] },
+    { title: "6. Регулирование и безопасность", children: ["Наблюдатель (VLOS)", "Регистрация", "Экзамен", "Зоны полётов", "Высота", "Ответственность", "Помехи", "Погода", "Безопасность людей"] },
+    { title: "7. Настройка и прошивки", children: ["Betaflight", "ExpressLRS", "PID", "Rates", "OSD", "CLI", "Прошивка ESC", "VTX Tables", "Режимы", "Симулятор"] },
+    { title: "8. Ремонт и обслуживание", children: ["Замена пропеллера", "Перепайка мотора", "Замена рамы", "Проверка антенн", "Чистка", "Проверка винтов", "Диагностика FC", "Замена камеры", "Тест моторов", "Аккумуляторы"] },
+    { title: "9. Сборка и пайка", children: ["Пайка моторов", "Пайка питания", "Пайка VTX", "Установка FC", "Проверка КЗ", "Smoke Stopper", "Антенны", "Укладка проводов", "Прошивка FC", "Тест без пропеллеров"] },
+    { title: "10. Спецприменение", children: ["FPV-камикадзе", "Дальность", "Нагрузка", "Скорость", "Оптоволокно", "Ночные версии", "Дешевизна", "Маневренность", "РЭБ", "Автосопровождение"] }
+];
+
+const githubUser = "izeleznov494-source";
+const repoName = "fpv-lab";
+
+const appContainer = document.getElementById('app');
+
+function render(items, container) {
+    items.forEach(item => {
+        if (item.children) {
+            const folder = document.createElement('div');
+            folder.className = 'folder';
+            
+            const header = document.createElement('div');
+            header.className = 'folder-header';
+            header.innerHTML = `<span>📁</span><span>${item.title}</span><span class="arrow">▶</span>`;
+            
+            const content = document.createElement('div');
+            content.className = 'folder-content';
+            
+            header.addEventListener('click', () => {
+                folder.classList.toggle('open');
+                if(!folder.classList.contains('open')) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+            
+            folder.appendChild(header);
+            folder.appendChild(content);
+            container.appendChild(folder);
+            
+            const childrenObjects = item.children.map(title => ({ title }));
+            render(childrenObjects, content);
+        } else {
+            const doc = document.createElement('div');
+            doc.className = 'doc';
+            doc.innerHTML = `<span></span> <span>${item.title}</span>`;
+            
+            doc.addEventListener('click', () => {
+                // ТУТ БУДЕТ ЛОГИКА СКАЧИВАНИЯ
+                alert(`Тут будет скачиваться: ${item.title}.docx`);
+            });
+            container.appendChild(doc);
+        }
+    });
 }
 
-body {
-    background-color: #050810;
-    /* Анимированный фон с сеткой и свечением */
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.15), transparent 60%),
-        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 30px 30px, 30px 30px;
-    color: #e2e8f0;
-    min-height: 100vh;
-    overflow-x: hidden;
-    animation: moveGrid 20s linear infinite;
-}
-
-@keyframes moveGrid {
-    0% { background-position: 0 0, 0 0, 0 0; }
-    100% { background-position: 0 0, 0 30px, 30px 0; }
-}
-
-.app-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 15px 40px 15px;
-    position: relative;
-    z-index: 1;
-}
-
-/* Шапка */
-#main-header { margin-bottom: 25px; }
-
-.hero-section {
-    width: 100%;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    position: relative;
-    background: linear-gradient(180deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
-    border-bottom: 2px solid #00e5ff;
-    box-shadow: 0 10px 20px -10px rgba(0, 229, 255, 0.3);
-}
-
-.hero-content {
-    text-align: center;
-    animation: pulseGlow 3s infinite alternate;
-}
-
-@keyframes pulseGlow {
-    0% { filter: drop-shadow(0 0 5px #00e5ff); }
-    100% { filter: drop-shadow(0 0 20px #00e5ff); }
-}
-
-.drone-icon {
-    font-size: 32px;
-    margin-bottom: 5px;
-}
-
-.hero-text {
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: 8px;
-    color: #fff;
-    text-shadow: 0 0 10px #00e5ff;
-}
-
-.hero-subtext {
-    font-size: 10px;
-    color: #00e5ff;
-    letter-spacing: 4px;
-    margin-top: 5px;
-}
-
-h1 {
-    font-size: 26px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 5px;
-    text-align: left;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-left: 4px solid #00e5ff;
-    padding-left: 10px;
-}
-
-.subtitle {
-    color: #64748b;
-    font-size: 13px;
-    text-align: left;
-    padding-left: 14px;
-    margin-bottom: 25px;
-}
-
-/* Стиль папок (Карточки) */
-.folder {
-    background: rgba(10, 15, 30, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 229, 255, 0.15);
-    border-radius: 8px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Светящаяся полоска слева у папки */
-.folder::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: #00e5ff;
-    box-shadow: 0 0 10px #00e5ff;
-    opacity: 0.5;
-    transition: opacity 0.3s;
-}
-
-.folder:hover {
-    background: rgba(15, 25, 45, 0.9);
-    border-color: rgba(0, 229, 255, 0.4);
-    box-shadow: 0 5px 20px rgba(0, 229, 255, 0.1);
-    transform: translateX(4px);
-}
-
-.folder:hover::before { opacity: 1; }
-
-.folder.open {
-    border-color: rgba(0, 229, 255, 0.6);
-    box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
-}
-
-.folder-header {
-    padding: 16px 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-weight: 700;
-    font-size: 15px;
-    color: #e2e8f0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.folder-header .arrow {
-    margin-left: auto;
-    transition: transform 0.3s ease;
-    font-size: 10px;
-    color: #00e5ff;
-}
-
-.folder.open > .folder-header .arrow {
-    transform: rotate(90deg);
-}
-
-.folder-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(0, 0, 0, 0.4);
-}
-
-/* Документы */
-.doc {
-    padding: 14px 20px 14px 45px;
-    color: #94a3b8;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(0, 229, 255, 0.05);
-    transition: all 0.2s;
-    position: relative;
-}
-
-.doc:last-child { border-bottom: none; }
-
-.doc:hover {
-    color: #00e5ff;
-    background: rgba(0, 229, 255, 0.05);
-    padding-left: 50px;
-}
-
-/* Иконка документа (квадратик) */
-.doc span:first-child {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border: 1px solid rgba(0, 229, 255, 0.4);
-    border-radius: 2px;
-    transition: all 0.2s;
-}
-
-.doc:hover span:first-child {
-    background: #00e5ff;
-    box-shadow: 0 0 10px #00e5ff;
-    border-color: #00e5ff;
-}
+render(structure, appContainer);
