@@ -11,7 +11,10 @@ const structure = [
     { title: "10. Спецприменение", children: ["FPV-камикадзе", "Дальность", "Нагрузка", "Скорость", "Оптоволокно", "Ночные версии", "Дешевизна", "Маневренность", "РЭБ", "Автосопровождение"] }
 ];
 
-// Список ВСЕХ файлов, которые ты загрузил. Я переписал его в точности как на твоем скриншоте.
+// ВАЖНО: Твой ник на GitHub и название репозитория
+const githubUser = "izeleznov494-source";
+const repoName = "fpv-lab";
+
 const allFiles = [
     "Acro Mode (Акро Rate).docx", "Air Mode.docx", "Angle Mode (Угол).docx", "Betaflight.docx", "CLI (Command Line Interface).docx",
     "Cinewhoop.docx", "Diversity.docx", "ExpressLRS (ELRS) .docx", "FPV-гонки (Racing).docx", "FPV-камикадзе (ВоенноеСпец).docx",
@@ -69,14 +72,16 @@ function render(items, container) {
             doc.innerHTML = `<span>📥</span> <span>${item.title}</span>`;
             
             doc.addEventListener('click', () => {
-                // Ищем файл, который начинается с названия пункта
                 const foundFile = allFiles.find(fileName => 
                     fileName.toLowerCase().startsWith(item.title.toLowerCase())
                 );
 
                 if (foundFile) {
+                    // Формируем прямую ссылку на скачивание (Raw)
+                    const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${foundFile}`;
+                    
                     const link = document.createElement('a');
-                    link.href = encodeURI(foundFile); // Кодируем пробелы и русские буквы
+                    link.href = encodeURI(rawUrl); 
                     link.download = foundFile; 
                     document.body.appendChild(link);
                     link.click();
