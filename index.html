@@ -4,21 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FPV Лаборатория</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Блок приветствия как на GitVerse -->
-        <header id="main-header">
-            <div class="hero-section">
-                <h1>FPV Лаборатория</h1>
-                <p class="hero-subtext">База знаний и инструкции для пилотов дронов</p>
+    <!-- Кнопка для открытия меню (мобильная версия) -->
+    <button id="menu-toggle" class="menu-btn">☰</button>
+
+    <!-- Боковое меню (Sidebar) -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-icon">🚀</div>
+            <h2>FPV LAB</h2>
+        </div>
+        <div class="sidebar-menu" id="sidebar-menu">
+            <!-- Сюда будут загружаться темы из app.js -->
+        </div>
+    </aside>
+
+    <!-- Затемнение фона при открытом меню -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Основная рабочая область -->
+    <main id="main-content" class="main-content">
+        <!-- Динамический фон -->
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+
+        <!-- Контент (заголовок и выбранная тема) -->
+        <div class="content-wrapper">
+            <div id="reader-view" class="reader-view">
+                <h1 id="reader-title">👋 Добро пожаловать в FPV Лабораторию</h1>
+                <p id="reader-content">Выбери тему в меню слева, чтобы начать изучение.</p>
             </div>
-        </header>
-        
-        <!-- Сюда будут загружаться темы -->
-        <main id="app"></main>
-    </div>
+        </div>
+    </main>
+
     <script src="app.js"></script>
 </body>
 </html>
