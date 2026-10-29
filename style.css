@@ -2,13 +2,12 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #080c14; /* Очень темный, почти черный фон */
+    background-color: #080c14; 
     color: #e2e8f0;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-/* Сетка на фоне */
 .bg-grid {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -23,7 +22,7 @@ body {
 .app-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 15px 30px 15px; /* Убрали верхний отступ для картинки */
+    padding: 0 15px 30px 15px; 
     position: relative;
 }
 
@@ -35,23 +34,45 @@ body {
 
 .hero-section {
     width: 100%;
-    height: 180px;
+    height: 160px;
     border-radius: 0 0 24px 24px;
     overflow: hidden;
     margin-bottom: 20px;
     position: relative;
+    background: linear-gradient(135deg, #0b101e, #16213e, #0b101e);
+    border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: brightness(0.7) contrast(1.1);
+.hero-content {
+    text-align: center;
+    z-index: 2;
 }
 
-/* Заголовки (выровнены по левому краю) */
+.drone-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px #4fc3f7);
+}
+
+.hero-text {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #4fc3f7;
+    text-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
+}
+
+.hero-subtext {
+    font-size: 12px;
+    color: #718096;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
 h1 { 
     font-size: 28px; 
     font-weight: 800; 
@@ -59,14 +80,14 @@ h1 {
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent; 
     margin-bottom: 5px;
-    text-align: left; /* Аккуратно слева */
+    text-align: left; 
 }
 
 .subtitle { 
     color: #64748b; 
     font-size: 14px; 
     font-weight: 500; 
-    text-align: left; /* Аккуратно слева */
+    text-align: left; 
     margin-bottom: 20px;
 }
 
