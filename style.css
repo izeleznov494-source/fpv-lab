@@ -2,94 +2,105 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #0b101e;
-    /* Делаем глубокий фон с градиентами */
-    background-image: 
-        radial-gradient(circle at 15% 50%, rgba(79, 195, 247, 0.08), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(41, 182, 246, 0.06), transparent 25%);
+    background-color: #080c14; /* Очень темный, почти черный фон */
     color: #e2e8f0;
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
 }
 
-/* Анимированная сетка на фоне (как радар) */
-body::before {
-    content: '';
+/* Сетка на фоне */
+.bg-grid {
     position: fixed;
-    top: -50%; left: -50%; width: 200%; height: 200%;
+    top: 0; left: 0; right: 0; bottom: 0;
     background-image: 
-        linear-gradient(rgba(79, 195, 247, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79, 195, 247, 0.04) 1px, transparent 1px);
+        linear-gradient(rgba(79, 195, 247, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 195, 247, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     z-index: -1;
-    transform: rotate(15deg);
     pointer-events: none;
-    animation: panGrid 60s linear infinite;
-}
-
-@keyframes panGrid {
-    0% { transform: rotate(15deg) translateY(0); }
-    100% { transform: rotate(15deg) translateY(40px); }
 }
 
 .app-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 15px 30px 15px; /* Убрали верхний отступ для картинки */
     position: relative;
-    z-index: 1;
 }
 
-header { text-align: center; padding: 30px 0 40px; }
+/* Заставка (Hero Section) */
+#main-header {
+    padding-top: 0;
+    margin-bottom: 25px;
+}
+
+.hero-section {
+    width: 100%;
+    height: 180px;
+    border-radius: 0 0 24px 24px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.7) contrast(1.1);
+}
+
+/* Заголовки (выровнены по левому краю) */
 h1 { 
-    font-size: 34px; 
-    font-weight: 900; 
-    background: linear-gradient(90deg, #4fc3f7, #00e5ff, #2979ff); 
+    font-size: 28px; 
+    font-weight: 800; 
+    background: linear-gradient(90deg, #4fc3f7, #00e5ff); 
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent; 
-    margin-bottom: 8px;
-    text-shadow: 0 0 20px rgba(79, 195, 247, 0.3);
-    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-align: left; /* Аккуратно слева */
 }
-.subtitle { color: #718096; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; }
+
+.subtitle { 
+    color: #64748b; 
+    font-size: 14px; 
+    font-weight: 500; 
+    text-align: left; /* Аккуратно слева */
+    margin-bottom: 20px;
+}
 
 /* Папки */
 .folder {
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    margin-bottom: 16px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    margin-bottom: 12px;
     overflow: hidden;
-    border: 1px solid rgba(79, 195, 247, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(79, 195, 247, 0.1);
     transition: all 0.3s ease;
 }
 
 .folder:hover { 
-    border-color: rgba(79, 195, 247, 0.5);
-    box-shadow: 0 8px 32px rgba(79, 195, 247, 0.15);
-    transform: translateY(-2px);
+    border-color: rgba(79, 195, 247, 0.4);
+    background: rgba(15, 23, 42, 0.9);
 }
 
 .folder-header {
-    padding: 18px 20px;
+    padding: 16px 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     font-weight: 600;
-    font-size: 16px;
-    color: #e2e8f0;
-    transition: background 0.2s;
+    font-size: 15px;
+    color: #f1f5f9;
 }
-
-.folder-header:hover { background: rgba(79, 195, 247, 0.08); }
 
 .folder-header .arrow {
     margin-left: auto;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 14px;
+    transition: transform 0.3s ease;
+    font-size: 12px;
     color: #4fc3f7;
 }
 
@@ -98,81 +109,67 @@ h1 {
 .folder-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(10, 15, 30, 0.6);
+    transition: max-height 0.4s ease-out;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 /* Документы */
 .doc {
-    padding: 16px 20px 16px 50px;
+    padding: 14px 20px 14px 45px;
     color: #94a3b8;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 15px;
+    gap: 10px;
+    font-size: 14px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     transition: all 0.2s;
 }
 
 .doc:last-child { border-bottom: none; }
-.doc:hover { 
-    color: #4fc3f7; 
-    background: rgba(79, 195, 247, 0.1); 
-    padding-left: 58px; 
-}
+.doc:hover { color: #4fc3f7; background: rgba(79, 195, 247, 0.05); }
 
 /* Экран чтения */
 .hidden { display: none !important; }
 
-#reader-view { animation: slideUp 0.4s ease-out; }
+#reader-view { animation: slideUp 0.3s ease-out; }
 
 .reader-header {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 25px;
-    padding-top: 10px;
+    margin-bottom: 20px;
+    padding-top: 20px;
 }
 
 .back-btn {
     background: rgba(79, 195, 247, 0.1);
-    border: 1px solid rgba(79, 195, 247, 0.4);
+    border: 1px solid rgba(79, 195, 247, 0.3);
     color: #4fc3f7;
-    padding: 8px 20px;
+    padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     transition: all 0.2s;
-    box-shadow: 0 0 15px rgba(79, 195, 247, 0.1);
 }
 
-.back-btn:hover { 
-    background: rgba(79, 195, 247, 0.2); 
-    box-shadow: 0 0 15px rgba(79, 195, 247, 0.3);
-}
+.back-btn:hover { background: rgba(79, 195, 247, 0.2); }
 
-#reader-title {
-    font-size: 22px;
-    color: #e2e8f0;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
+#reader-title { font-size: 20px; color: #e2e8f0; }
 
 .reader-content {
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.8);
     border-radius: 16px;
-    padding: 25px;
-    border: 1px solid rgba(79, 195, 247, 0.2);
-    line-height: 1.8;
-    font-size: 16px;
+    padding: 20px;
+    border: 1px solid rgba(79, 195, 247, 0.15);
+    line-height: 1.7;
+    font-size: 15px;
     color: #cbd5e1;
-    min-height: 300px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    min-height: 200px;
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
