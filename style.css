@@ -7,89 +7,100 @@
 }
 
 body {
-    /* Тёмный фон как в Telegram */
-    background-color: #0e1621; 
-    color: #ffffff;
-    min-height: 100vh;
-    overflow-x: hidden;
+    background-color: #05080e;
+    color: #e2e8f0;
+    height: 100vh;
+    overflow: hidden; /* Запрещаем прокрутку всего окна */
+    display: flex;
 }
 
-/* Убираем центрирование, делаем на весь экран */
-.app-container {
-    width: 100%;
-    max-width: 1200px; /* Широкий контейнер для больших экранов */
-    margin: 0 auto;
-    padding: 20px 40px; /* Отступы по краям */
-    background-color: #17212b;
-    min-height: 100vh;
+/* Кнопка меню (только для мобилок) */
+.menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    color: #64b5f6;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    backdrop-filter: blur(10px);
 }
 
-/* Шапка */
-#main-header {
-    background-color: #17212b;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #242f3d;
-    margin-bottom: 20px;
-}
-
-.hero-section h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-.hero-subtext {
-    color: #7f91a4;
-    font-size: 16px;
-}
-
-/* Сетка для папок (чтобы разнести на несколько экранов) */
-#app {
+/* Боковое меню */
+.sidebar {
+    width: 350px;
+    height: 100vh;
+    background: rgba(10, 15, 25, 0.95);
+    border-right: 1px solid rgba(100, 181, 246, 0.15);
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Расстояние между плашками */
+    backdrop-filter: blur(20px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 50;
 }
 
-/* Папки */
+.sidebar-header {
+    padding: 25px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(100, 181, 246, 0.1);
+    background: linear-gradient(90deg, rgba(100, 181, 246, 0.1), transparent);
+}
+
+.logo-icon {
+    font-size: 28px;
+    filter: drop-shadow(0 0 10px #64b5f6);
+}
+
+.sidebar-header h2 {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.sidebar-menu {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 10px;
+}
+
+/* Стили папок в меню */
 .folder {
-    background-color: #1c2733; /* Чуть светлее фона */
-    border: 1px solid #242f3d;
-    border-radius: 8px; /* Скругленные углы */
+    margin-bottom: 8px;
+    border-radius: 8px;
     overflow: hidden;
     transition: all 0.2s;
 }
 
-.folder:hover {
-    border-color: #64b5f6; /* Синий акцент */
-    box-shadow: 0 0 15px rgba(100, 181, 246, 0.1);
-}
-
 .folder-header {
-    padding: 18px 24px;
+    padding: 12px 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
     font-weight: 600;
-    font-size: 18px;
-    color: #ffffff;
-    transition: background 0.2s;
+    font-size: 15px;
+    color: #94a3b8;
+    border-radius: 8px;
+    transition: all 0.2s;
 }
 
 .folder-header:hover {
-    background-color: #202b36;
-}
-
-/* Убираем иконки папок, оставляем стрелку */
-.folder-header span:first-child {
-    display: none;
+    background: rgba(100, 181, 246, 0.1);
+    color: #fff;
 }
 
 .folder-header .arrow {
     margin-left: auto;
-    color: #64b5f6;
-    font-size: 16px;
+    font-size: 10px;
     transition: transform 0.3s;
 }
 
@@ -97,51 +108,124 @@ body {
     transform: rotate(90deg);
 }
 
-/* Контент внутри (документы) */
+.folder.open > .folder-header {
+    color: #64b5f6;
+}
+
 .folder-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease-out;
-    background-color: #0e1621;
+    padding-left: 15px; /* Отступ для вложенности */
 }
 
-/* Документы */
+/* Стили документов (файлов) */
 .doc {
-    padding: 16px 24px 16px 60px;
-    color: #a1a1aa;
+    padding: 10px 15px 10px 35px;
+    color: #64748b;
     cursor: pointer;
     display: flex;
     align-items: center;
-    font-size: 16px;
-    border-bottom: 1px solid #242f3d;
+    gap: 10px;
+    font-size: 14px;
+    border-radius: 6px;
     transition: all 0.2s;
 }
 
-.doc:last-child {
-    border-bottom: none;
-}
-
 .doc:hover {
-    color: #ffffff;
-    background-color: #202b36;
-    padding-left: 65px;
+    color: #fff;
+    background: rgba(100, 181, 246, 0.08);
 }
 
-/* Убираем старые квадратики, если остались */
 .doc span:first-child {
-    display: none;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #475569;
+    transition: background 0.2s;
 }
 
-/* Адаптив для телефонов */
-@media (max-width: 600px) {
-    .app-container {
-        padding: 15px;
+.doc:hover span:first-child {
+    background: #64b5f6;
+    box-shadow: 0 0 8px #64b5f6;
+}
+
+/* Рабочая область */
+.main-content {
+    flex: 1;
+    height: 100vh;
+    position: relative;
+    overflow-y: auto;
+    background: #05080e;
+}
+
+/* Фон с дроном и градиентом */
+.bg-image {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Тут ссылка на картинку дрона. Можно заменить на свою */
+    background-image: url('https://images.unsplash.com/photo-1592635196078-9fdc57746778?q=80&w=2000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, #05080e 80%);
+    z-index: 1;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.reader-view {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(100, 181, 246, 0.15);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    margin-top: 50px;
+}
+
+#reader-title {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
+}
+
+#reader-content {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #94a3b8;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .menu-btn { display: block; }
+    .sidebar {
+        position: fixed;
+        transform: translateX(-100%);
     }
-    .hero-section h1 {
-        font-size: 24px;
+    .sidebar.open {
+        transform: translateX(0);
     }
-    .folder-header {
-        font-size: 16px;
-        padding: 15px 20px;
+    .content-wrapper {
+        padding: 20px;
+        margin-top: 60px;
     }
+    .reader-view {
+        padding: 20px;
+    }
+    #reader-title { font-size: 24px; }
 }
