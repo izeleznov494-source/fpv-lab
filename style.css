@@ -7,8 +7,8 @@
 }
 
 body {
-    /* Глубокий фиолетово-черный градиент */
-    background: radial-gradient(circle at 50% 0%, #2a0f35 0%, #0d0714 60%, #050208 100%);
+    /* Глубокий фон в стиле GitVerse */
+    background: radial-gradient(circle at 50% -20%, #3b0d2a 0%, #15050e 50%, #050208 100%);
     background-attachment: fixed;
     color: #e2e8f0;
     min-height: 100vh;
@@ -18,103 +18,98 @@ body {
 .app-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 15px 40px 15px;
+    padding: 0 20px 40px 20px;
 }
 
 /* Шапка */
-#main-header { margin-bottom: 30px; }
+#main-header { margin-bottom: 35px; }
 
 .hero-section {
     width: 100%;
-    height: 160px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     position: relative;
-    /* Мягкое свечение снизу */
-    background: linear-gradient(180deg, rgba(180, 50, 255, 0.05) 0%, transparent 100%);
-    border-bottom: 1px solid rgba(180, 50, 255, 0.2);
+    background: linear-gradient(180deg, rgba(255, 50, 150, 0.03) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 50, 150, 0.1);
 }
 
 .hero-content { text-align: center; }
 
 .drone-icon {
-    font-size: 40px;
+    font-size: 38px;
     margin-bottom: 10px;
-    filter: drop-shadow(0 0 15px rgba(200, 100, 255, 0.8));
+    filter: drop-shadow(0 0 20px rgba(255, 50, 150, 0.5));
 }
 
 .hero-text {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 900;
-    letter-spacing: 6px;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(180, 50, 255, 0.8);
+    letter-spacing: 5px;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 50, 150, 0.5);
 }
 
 .hero-subtext {
     font-size: 11px;
-    color: #a78bfa; /* Светло-фиолетовый */
-    letter-spacing: 3px;
-    margin-top: 5px;
+    color: #f472b6; /* Розовый акцент */
+    letter-spacing: 4px;
+    margin-top: 6px;
     font-weight: 600;
 }
 
 h1 {
-    font-size: 32px;
-    font-weight: 900;
+    font-size: 34px; /* Крупный шрифт как на сайте */
+    font-weight: 800;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-align: left;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
 }
 
 .subtitle {
-    color: #8b7a9e;
-    font-size: 15px;
+    color: #94a3b8;
+    font-size: 16px;
     text-align: left;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    font-weight: 400;
 }
 
-/* Карточки папок */
+/* Папки (строгие, современные карточки) */
 .folder {
-    background: rgba(30, 20, 40, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(180, 50, 255, 0.1);
+    background: rgba(20, 10, 25, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
 }
 
 .folder:hover {
-    border-color: rgba(180, 50, 255, 0.4);
-    box-shadow: 0 8px 30px rgba(180, 50, 255, 0.15);
-    transform: translateY(-2px);
+    background: rgba(30, 15, 40, 0.6);
+    border-color: rgba(255, 50, 150, 0.3);
+    box-shadow: 0 4px 20px rgba(255, 50, 150, 0.05);
 }
 
 .folder-header {
-    padding: 18px 24px;
+    padding: 20px 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 15px;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 16px;
     color: #f1f5f9;
     transition: background 0.2s;
 }
 
-.folder-header:hover {
-    background: rgba(180, 50, 255, 0.05);
-}
-
 .folder-header .arrow {
     margin-left: auto;
     transition: transform 0.3s ease;
-    color: #d8b4fe;
+    color: #f472b6;
     font-size: 14px;
 }
 
@@ -125,11 +120,11 @@ h1 {
 .folder-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(10, 5, 15, 0.5);
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0, 0, 0, 0.2);
 }
 
-/* Элементы внутри папки (документы) */
+/* Документы */
 .doc {
     padding: 16px 24px 16px 50px;
     color: #a1a1aa;
@@ -138,8 +133,8 @@ h1 {
     align-items: center;
     gap: 12px;
     font-size: 15px;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    font-weight: 400;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
     transition: all 0.2s;
 }
 
@@ -148,23 +143,23 @@ h1 {
 }
 
 .doc:hover {
-    color: #fff;
-    background: rgba(180, 50, 255, 0.1);
+    color: #ffffff;
+    background: rgba(255, 50, 150, 0.08);
     padding-left: 55px;
 }
 
-/* Иконка файла */
+/* Иконка файла (квадратик) */
 .doc span:first-child {
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(180, 50, 255, 0.4);
-    border-radius: 4px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
     transition: all 0.2s;
 }
 
 .doc:hover span:first-child {
-    background: #d8b4fe;
-    border-color: #d8b4fe;
-    box-shadow: 0 0 10px rgba(180, 50, 255, 0.6);
+    border-color: #f472b6;
+    background: #f472b6;
+    box-shadow: 0 0 10px rgba(255, 50, 150, 0.5);
 }
