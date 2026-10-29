@@ -11,17 +11,34 @@ const structure = [
     { title: "10. Спецприменение", children: ["FPV-камикадзе", "Дальность", "Нагрузка", "Скорость", "Оптоволокно", "Ночные версии", "Дешевизна", "Маневренность", "РЭБ", "Автосопровождение"] }
 ];
 
-// Сюда вписываем английские имена файлов
-const englishNames = {
-    "Рама": "Rama.docx", "Моторы": "Motory.docx", "ESC": "ESC.docx", "FC": "FC.docx", "VTX": "VTX.docx", 
-    "FPV-камера": "FPV-kamera.docx", "Приёмник": "Priemnik.docx", "Антенны": "Antenny.docx", "Пропеллеры": "Propellery.docx", "PDB / BEC": "PDB.docx",
-    "Angle Mode": "Angle_Mode.docx", "Horizon Mode": "Horizon_Mode.docx", "Acro Mode": "Acro_Mode.docx", "Air Mode": "Air_Mode.docx", 
-    "Throttle": "Throttle.docx", "Yaw": "Yaw.docx", "Pitch": "Pitch.docx", "Roll": "Roll.docx", "Simulator": "Simulator.docx", "GPS Rescue": "GPS_Rescue.docx",
-    // Сюда потом допишешь остальные, когда переименуешь их
-};
-
 const githubUser = "izeleznov494-source";
 const repoName = "fpv-lab";
+
+// Функция, которая переводит русские буквы в английские (транслит)
+function translit(word) {
+    const converter = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh',
+        'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
+        'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts',
+        'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya'
+    };
+
+    return word.split('').map(char => {
+        const lower = char.toLowerCase();
+        if (converter[lower]) {
+            // Если буква была заглавной, делаем и английскую заглавной
+            return char === char.toUpperCase() ? converter[lower].toUpperCase() : converter[lower];
+        }
+        if (/[a-zA-Z0-9]/.test(char)) {
+            return char;
+        }
+        if (char === ' ') {
+            return '_';
+        }
+        return char;
+    }).join('');
+}
+
 const appContainer = document.getElementById('app');
 
 function render(items, container) {
@@ -29,39 +46,67 @@ function render(items, container) {
         if (item.children) {
             const folder = document.createElement('div');
             folder.className = 'folder';
+            
             const header = document.createElement('div');
             header.className = 'folder-header';
             header.innerHTML = `<span>📁</span><span>${item.title}</span><span class="arrow">▶</span>`;
+            
             const content = document.createElement('div');
             content.className = 'folder-content';
             
             header.addEventListener('click', () => {
                 folder.classList.toggle('open');
-                content.style.maxHeight = folder.classList.contains('open') ? content.scrollHeight + "px" : null;
+                if(!folder.classList.contains('open')) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
             });
             
             folder.appendChild(header);
             folder.appendChild(content);
             container.appendChild(folder);
-            render(item.children.map(title => ({ title })), content);
+            
+            const childrenObjects = item.children.map(title => ({ title }));
+            render(childrenObjects, content);
         } else {
             const doc = document.createElement('div');
             doc.className = 'doc';
             doc.innerHTML = `<span>📥</span> <span>${item.title}</span>`;
             
-            doc.addEventListener('click', () => {
-                // Берем английское имя из словаря. Если нет — пробуем как есть.
-                const fileName = englishNames[item.title] || (item.title + ".docx");
+            doc.addEventListener('click', async () => {
+                // Автоматически переводим название кнопки в английское имя файла
+                let engName = translit(item.title);
                 
+                // Убираем лишние символы (скобки, слэши), которые могут быть в названиях
+                engName = engName.replace(/[^a-zA-Z0-9_]/g, '');
+                const fileName = `${engName}.docx`;
+
                 // Ссылка на скачивание
                 const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${fileName}`;
                 
-                const link = document.createElement('a');
-                link.href = rawUrl;
-                link.download = fileName;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                doc.innerHTML = `<span>⏳</span> <span>Загрузка...</span>`;
+                
+                try {
+                    const response = await fetch(rawUrl);
+                    if (!response.ok) throw new Error('File not found');
+                    
+                    const blob = await response.blob();
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = fileName; // Скачается как "Rama.docx"
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(blobUrl);
+                    
+                    doc.innerHTML = `<span>✅</span> <span>${item.title}</span>`;
+                } catch (error) {
+                    alert(`Файл ${fileName} не найден.\nПроверьте, как он назван на GitHub.`);
+                    doc.innerHTML = `<span>❌</span> <span>${item.title}</span>`;
+                }
             });
             container.appendChild(doc);
         }
