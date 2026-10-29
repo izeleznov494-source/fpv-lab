@@ -45,13 +45,9 @@ function render(items, container) {
             doc.innerHTML = `<span></span> <span>${item.title}</span>`;
             
             doc.addEventListener('click', () => {
-                // Пытаемся сформировать имя файла. 
-                // ВАЖНО: файлы на GitHub должны называться латиницей (например, Rama.docx)
-                // Мы добавили простую логику: код сам берет название кнопки и пробует скачать файл с таким же именем
                 const fileName = `${item.title}.docx`; 
                 const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${encodeURIComponent(fileName)}`;
                 
-                // Создаем ссылку и скачиваем
                 const link = document.createElement('a');
                 link.href = rawUrl;
                 link.download = fileName;
