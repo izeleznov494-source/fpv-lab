@@ -56,18 +56,47 @@
     </main>
 
     <script>
-        // ТУТ ВСЕ 10 ТЕМ И ИХ ДОКУМЕНТЫ
         const structure = [
-            { title: "1. Основные компоненты и архитектура", children: ["Рама", "Моторы", "ESC", "FC", "VTX", "FPV-камера", "Приёмник", "Антенны", "Пропеллеры", "PDB / BEC"] },
-            { title: "2. Полётные режимы и управление", children: ["Angle Mode", "Horizon Mode", "Acro Mode", "Air Mode", "Throttle", "Yaw", "Pitch", "Roll", "Simulator", "GPS Rescue"] },
-            { title: "3. Видеосистемы и связь", children: ["Аналоговое видео", "Цифровое HD (DJI)", "Цифровое HD (HDZero)", "Задержка", "Диапазоны частот", "Мощность VTX", "Поляризация", "Очки (Goggles)", "Diversity", "Помехоустойчивость"] },
-            { title: "4. Питание и аккумуляторы", children: ["LiPo", "Li-Ion", "Ячейки (S)", "Ёмкость (mAh)", "Время полёта", "Разъёмы", "Зарядка", "Хранение", "Просадки напряжения", "Риски"] },
-            { title: "5. Применение", children: ["Гонки", "Фристайл", "Cinewhoop", "Long Range", "FPV-камикадзе", "Разведка", "Поиск и спасение", "Кинематограф", "Инспекция", "Обучение"] },
-            { title: "6. Регулирование и безопасность", children: ["Наблюдатель (VLOS)", "Регистрация", "Экзамен", "Зоны полётов", "Высота", "Ответственность", "Помехи", "Погода", "Безопасность людей"] },
-            { title: "7. Настройка и прошивки", children: ["Betaflight", "ExpressLRS", "PID", "Rates", "OSD", "CLI", "Прошивка ESC", "VTX Tables", "Режимы", "Симулятор"] },
-            { title: "8. Ремонт и обслуживание", children: ["Замена пропеллера", "Перепайка мотора", "Замена рамы", "Проверка антенн", "Чистка", "Проверка винтов", "Диагностика FC", "Замена камеры", "Тест моторов", "Аккумуляторы"] },
-            { title: "9. Сборка и пайка", children: ["Пайка моторов", "Пайка питания", "Пайка VTX", "Установка FC", "Проверка КЗ", "Smoke Stopper", "Антенны", "Укладка проводов", "Прошивка FC", "Тест без пропеллеров"] },
-            { title: "10. Спецприменение", children: ["FPV-камикадзе", "Дальность", "Нагрузка", "Скорость", "Оптоволокно", "Ночные версии", "Дешевизна", "Маневренность", "РЭБ", "Автосопровождение"] }
+            { 
+                title: "🛠 1. Основные компоненты", 
+                children: ["📦 Рама", "⚙️ Моторы", "🔌 ESC", "🧠 FC", "📡 VTX", "📷 FPV-камера", "📻 Приёмник", "📶 Антенны", "🍃 Пропеллеры", "🔋 PDB / BEC"] 
+            },
+            { 
+                title: "🎮 2. Полётные режимы", 
+                children: ["📐 Angle Mode", "🌅 Horizon Mode", "🔄 Acro Mode", "🕊 Air Mode", "🚀 Throttle", "↩️ Yaw", "⬆️ Pitch", "↔️ Roll", "💻 Simulator", "🛰 GPS Rescue"] 
+            },
+            { 
+                title: "📺 3. Видеосистемы и связь", 
+                children: ["📼 Аналоговое видео", "📺 Цифровое HD (DJI)", "🔴 Цифровое HD (HDZero)", "⏱ Задержка", "📻 Диапазоны частот", "⚡ Мощность VTX", "📡 Поляризация", "👓 Очки (Goggles)", "📶 Diversity", "🛡 Помехоустойчивость"] 
+            },
+            { 
+                title: "🔋 4. Питание и батареи", 
+                children: ["🔋 LiPo", "🔋 Li-Ion", "🔢 Ячейки (S)", "📊 Ёмкость (mAh)", "⏳ Время полёта", "🔌 Разъёмы", "⚡ Зарядка", "📦 Хранение", "📉 Просадки напряжения", "⚠️ Риски"] 
+            },
+            { 
+                title: "🚁 5. Применение", 
+                children: ["🏁 Гонки", "🏄 Фристайл", "🎥 Cinewhoop", "🗺 Long Range", "💥 FPV-камикадзе", "🔍 Разведка", "🚑 Поиск и спасение", "🎬 Кинематограф", "🏗 Инспекция", "🎓 Обучение"] 
+            },
+            { 
+                title: "⚖️ 6. Безопасность и законы", 
+                children: ["👀 Наблюдатель (VLOS)", "📝 Регистрация", "📋 Экзамен", "🚫 Зоны полётов", "📏 Высота", "⚖️ Ответственность", "📡 Помехи", "🌧 Погода", "👨‍👩‍👧 Безопасность людей"] 
+            },
+            { 
+                title: "💻 7. Настройка и прошивки", 
+                children: ["🐝 Betaflight", "📡 ExpressLRS", "🎛 PID", "⚡ Rates", "📺 OSD", "⌨️ CLI", "🔌 Прошивка ESC", "📊 VTX Tables", "🔘 Режимы", "🕹 Симулятор"] 
+            },
+            { 
+                title: "🔧 8. Ремонт и обслуживание", 
+                children: ["🍃 Замена пропеллера", "🔌 Перепайка мотора", "🛠 Замена рамы", "📶 Проверка антенн", "🧹 Чистка", "🔩 Проверка винтов", "🧠 Диагностика FC", "📷 Замена камеры", "⚙️ Тест моторов", "🔋 Аккумуляторы"] 
+            },
+            { 
+                title: "🧰 9. Сборка и пайка", 
+                children: ["⚙️ Пайка моторов", "🔌 Пайка питания", "📡 Пайка VTX", "🧠 Установка FC", "⚡ Проверка КЗ", "💨 Smoke Stopper", "📶 Антенны", "🧵 Укладка проводов", "💻 Прошивка FC", "🚫 Тест без пропеллеров"] 
+            },
+            { 
+                title: "🪖 10. Спецприменение", 
+                children: ["💥 FPV-камикадзе", "🗺 Дальность", "⚖️ Нагрузка", "🚀 Скорость", "🧵 Оптоволокно", "🌙 Ночные версии", "💰 Дешевизна", "💨 Маневренность", "📡 РЭБ", "🎯 Автосопровождение"] 
+            }
         ];
 
         const sidebarMenu = document.getElementById('sidebar-menu');
@@ -82,9 +111,12 @@
                 if (item.children) {
                     const folder = document.createElement('div');
                     folder.className = 'folder';
+                    
                     const header = document.createElement('div');
                     header.className = 'folder-header';
-                    header.innerHTML = `<span>📁</span><span>${item.title}</span><span class="arrow">▶</span>`;
+                    // Иконка папки и заголовок
+                    header.innerHTML = `<span>${item.title.split(' ')[0]}</span><span>${item.title.substring(item.title.indexOf(' ')+1)}</span><span class="arrow">▶</span>`;
+                    
                     const content = document.createElement('div');
                     content.className = 'folder-content';
                     
@@ -102,15 +134,22 @@
                     folder.appendChild(content);
                     container.appendChild(folder);
                     
-                    // Рендерим документы внутри папки
+                    // Внутри папки просто документы
                     item.children.forEach(title => {
                         const doc = document.createElement('div');
                         doc.className = 'doc';
+                        // Иконка документа уже задана в CSS (📄), но мы добавим эмодзи из названия
                         doc.innerHTML = `<span></span> <span>${title}</span>`;
+                        
                         doc.addEventListener('click', (e) => {
                             e.stopPropagation();
+                            
+                            // Очищаем название от эмодзи для отображения (опционально)
+                            const cleanTitle = title.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
+                            
                             readerTitle.textContent = title;
-                            readerContent.textContent = `Тут будет содержимое файла: ${title}.docx`;
+                            readerContent.textContent = `Тут будет содержимое файла: ${cleanTitle}.docx`;
+                            
                             if(window.innerWidth <= 768) { sidebar.classList.remove('open'); overlay.style.display = 'none'; }
                         });
                         content.appendChild(doc);
