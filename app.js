@@ -11,30 +11,17 @@ const structure = [
     { title: "10. Спецприменение", children: ["FPV-камикадзе", "Дальность", "Нагрузка", "Скорость", "Оптоволокно", "Ночные версии", "Дешевизна", "Маневренность", "РЭБ", "Автосопровождение"] }
 ];
 
+// Сюда вписываем английские имена файлов
+const englishNames = {
+    "Рама": "Rama.docx", "Моторы": "Motory.docx", "ESC": "ESC.docx", "FC": "FC.docx", "VTX": "VTX.docx", 
+    "FPV-камера": "FPV-kamera.docx", "Приёмник": "Priemnik.docx", "Антенны": "Antenny.docx", "Пропеллеры": "Propellery.docx", "PDB / BEC": "PDB.docx",
+    "Angle Mode": "Angle_Mode.docx", "Horizon Mode": "Horizon_Mode.docx", "Acro Mode": "Acro_Mode.docx", "Air Mode": "Air_Mode.docx", 
+    "Throttle": "Throttle.docx", "Yaw": "Yaw.docx", "Pitch": "Pitch.docx", "Roll": "Roll.docx", "Simulator": "Simulator.docx", "GPS Rescue": "GPS_Rescue.docx",
+    // Сюда потом допишешь остальные, когда переименуешь их
+};
+
 const githubUser = "izeleznov494-source";
 const repoName = "fpv-lab";
-
-const allFiles = [
-    "Acro Mode (Акро Rate).docx", "Air Mode.docx", "Angle Mode (Угол).docx", "Betaflight.docx", "CLI (Command Line Interface).docx",
-    "Cinewhoop.docx", "Diversity.docx", "ExpressLRS (ELRS) .docx", "FPV-гонки (Racing).docx", "FPV-камикадзе (ВоенноеСпец).docx",
-    "FPV-камикадзе.docx", "FPV-очки (Goggles).docx", "GPS Rescue Return.docx", "Horizon Mode (Горизонт).docx", "Li-Ion (Литий-ион).docx",
-    "LiPo (Литий-полимер).docx", "PDB (Плата распределения питания).docx", "PID-регуляторы.docx", "Rates (Скорости).docx",
-    "Simulator Training.docx", "Throttle (Газ).docx", "VTX Tables.docx", "Yaw (Рыскание).docx", "Антенны.docx", "Аналоговое видео.docx",
-    "Диапазоны частот.docx", "Задержка (Latency).docx", "Замена камеры.docx", "Замена пропеллера.docx", "Замена рамы.docx",
-    "Инспекция.docx", "Кинематограф.docx", "Long Range (Дальний полёт).docx", "Мощность передатчика (VTX).docx", "Моторы.docx",
-    "Обучение.docx", "Ответственность.docx", "Пайка VTX.docx", "Пайка моторов.docx", "Пайка питания.docx", "Перепайка мотора.docx",
-    "Погода.docx", "Поиск и спасение (SAR).docx", "Полезная нагрузка.docx", "Поляризация антенн.docx", "Помехи.docx",
-    "Помехоустойчивость.docx", "Проверка антенн.docx", "Проверка винтов.docx", "Проверка короткого замыкания.docx",
-    "Пропеллеры.docx", "Прошивка FC.docx", "Прошивка ESC (Bluejay AM32).docx", "Рама.docx", "Регистрация.docx",
-    "Режимы (Modes).docx", "Ремонт и обслуживание.docx", "Риски.docx", "Сборка и пайка.docx", "Скорость.docx",
-    "Smoke Stopper.docx", "Тест без пропеллеров.docx", "Тест моторов.docx", "Укладка проводов.docx", "Установка FC.docx",
-    "Хранение (Storage).docx", "Цифровое HD (DJI).docx", "Цифровое HD (HDZero).docx", "Чистка.docx", "Экзамен (CATS).docx",
-    "Ячейки (S).docx", "Ёмкость (mAh).docx", "Время полёта.docx", "Разъёмы.docx", "Зарядка.docx", "Просадки напряжения.docx",
-    "Гонки.docx", "Фристайл.docx", "Разведка.docx", "Диагностика FC.docx", "Аккумуляторы.docx", "OSD (On-Screen Display).docx",
-    "Наблюдатель (VLOS).docx", "Зоны полётов.docx", "Высота.docx", "Безопасность людей.docx", "Дальность.docx",
-    "Оптоволокно.docx", "Ночные версии.docx", "Дешевизна.docx", "Маневренность.docx", "РЭБ.docx", "Автосопровождение.docx"
-];
-
 const appContainer = document.getElementById('app');
 
 function render(items, container) {
@@ -42,69 +29,39 @@ function render(items, container) {
         if (item.children) {
             const folder = document.createElement('div');
             folder.className = 'folder';
-            
             const header = document.createElement('div');
             header.className = 'folder-header';
             header.innerHTML = `<span>📁</span><span>${item.title}</span><span class="arrow">▶</span>`;
-            
             const content = document.createElement('div');
             content.className = 'folder-content';
             
             header.addEventListener('click', () => {
                 folder.classList.toggle('open');
-                if(!folder.classList.contains('open')) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
+                content.style.maxHeight = folder.classList.contains('open') ? content.scrollHeight + "px" : null;
             });
             
             folder.appendChild(header);
             folder.appendChild(content);
             container.appendChild(folder);
-            
-            const childrenObjects = item.children.map(title => ({ title }));
-            render(childrenObjects, content);
+            render(item.children.map(title => ({ title })), content);
         } else {
             const doc = document.createElement('div');
             doc.className = 'doc';
             doc.innerHTML = `<span>📥</span> <span>${item.title}</span>`;
             
-            doc.addEventListener('click', async () => {
-                const foundFile = allFiles.find(fileName => 
-                    fileName.toLowerCase().startsWith(item.title.toLowerCase())
-                );
-
-                if (foundFile) {
-                    doc.innerHTML = `<span>⏳</span> <span>Загрузка...</span>`;
-                    try {
-                        // Формируем прямую ссылку на скачивание
-                        const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${encodeURIComponent(foundFile)}`;
-                        
-                        // Скачиваем файл в память (обходя ошибку кодировки)
-                        const response = await fetch(rawUrl);
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        
-                        const blob = await response.blob();
-                        const blobUrl = window.URL.createObjectURL(blob);
-                        
-                        // Отдаем браузеру готовый файл
-                        const link = document.createElement('a');
-                        link.href = blobUrl;
-                        link.download = foundFile;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        window.URL.revokeObjectURL(blobUrl);
-                        
-                        doc.innerHTML = `<span>✅</span> <span>${item.title}</span>`;
-                    } catch (error) {
-                        alert("Ошибка при скачивании файла. Проверьте интернет.");
-                        doc.innerHTML = `<span>❌</span> <span>${item.title}</span>`;
-                    }
-                } else {
-                    alert(`Файл для "${item.title}" не найден.`);
-                }
+            doc.addEventListener('click', () => {
+                // Берем английское имя из словаря. Если нет — пробуем как есть.
+                const fileName = englishNames[item.title] || (item.title + ".docx");
+                
+                // Ссылка на скачивание
+                const rawUrl = `https://raw.githubusercontent.com/${githubUser}/${repoName}/main/${fileName}`;
+                
+                const link = document.createElement('a');
+                link.href = rawUrl;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             });
             container.appendChild(doc);
         }
