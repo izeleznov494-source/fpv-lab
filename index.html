@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FPV Лаборатория</title>
     <style>
-        /* СТИЛИ ПРЯМО ЗДЕСЬ, ЧТОБЫ ОНИ ТОЧНО ЗАГРУЗИЛИСЬ */
+        /* --- СТИЛИ --- */
         * {
             margin: 0;
             padding: 0;
@@ -77,10 +77,8 @@
             color: #94a3b8;
         }
 
-        /* СТИЛИ МЕНЮ (Папки) */
-        .folder {
-            margin-bottom: 5px;
-        }
+        /* СТИЛИ МЕНЮ */
+        .folder { margin-bottom: 5px; }
 
         .folder-header {
             padding: 12px 15px;
@@ -150,9 +148,7 @@
             <div class="logo">
                 <span>🚁</span> FPV LAB
             </div>
-            <div class="menu-list" id="sidebar-menu">
-                <!-- Сюда загрузится структура из app.js -->
-            </div>
+            <div class="menu-list" id="sidebar-menu"></div>
         </aside>
 
         <main class="main-content">
@@ -162,6 +158,69 @@
             </div>
         </main>
     </div>
-    <script src="app.js"></script>
+
+    <script>
+        // --- ЛОГИКА ---
+        const structure = [
+            { title: "1. Основные компоненты", children: [
+                { title: "Рама", children: [{ title: "Рама" }] },
+                { title: "Моторы", children: [{ title: "Моторы" }] },
+                { title: "ESC", children: [{ title: "ESC" }] }
+            ]},
+            { title: "2. Режимы", children: [
+                { title: "Angle Mode", children: [{ title: "Angle Mode" }] },
+                { title: "Acro Mode", children: [{ title: "Acro Mode" }] }
+            ]}
+        ];
+
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const readerTitle = document.getElementById('reader-title');
+        const readerContent = document.getElementById('reader-content');
+
+        function renderMenu(items, container, level = 0) {
+            items.forEach(item => {
+                if (item.children) {
+                    const folder = document.createElement('div');
+                    folder.className = 'folder';
+                    
+                    const header = document.createElement('div');
+                    header.className = 'folder-header';
+                    header.innerHTML = `<span>📁</span><span>${item.title}</span><span class="arrow">▶</span>`;
+                    
+                    const content = document.createElement('div');
+                    content.className = 'folder-content';
+                    
+                    header.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        folder.classList.toggle('open');
+                        if(!folder.classList.contains('open')) {
+                            content.style.maxHeight = null;
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        }
+                    });
+                    
+                    folder.appendChild(header);
+                    folder.appendChild(content);
+                    container.appendChild(folder);
+                    
+                    renderMenu(item.children, content, level + 1);
+                } else {
+                    const doc = document.createElement('div');
+                    doc.className = 'doc';
+                    doc.innerHTML = `<span></span> <span>${item.title}</span>`;
+                    
+                    doc.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        readerTitle.textContent = item.title;
+                        readerContent.textContent = `Тут будет содержимое: ${item.title}.docx`;
+                    });
+                    container.appendChild(doc);
+                }
+            });
+        }
+
+        renderMenu(structure, sidebarMenu);
+    </script>
 </body>
 </html>
