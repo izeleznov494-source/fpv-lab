@@ -1,39 +1,28 @@
-/* Сброс настроек */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent; 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    /* Глубокий темно-синий градиент */
-    background: radial-gradient(circle at 50% 0%, #1a233a 0%, #080c14 70%);
-    background-attachment: fixed;
+    background-color: #050810;
+    /* Анимированный фон с сеткой и свечением */
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.15), transparent 60%),
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 30px 30px, 30px 30px;
     color: #e2e8f0;
     min-height: 100vh;
     overflow-x: hidden;
+    animation: moveGrid 20s linear infinite;
 }
 
-/* Красивая анимированная сетка на фоне (как на радаре) */
-body::before {
-    content: '';
-    position: fixed;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background-image: 
-        linear-gradient(rgba(79, 195, 247, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79, 195, 247, 0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    z-index: -1;
-    transform: rotate(10deg);
-    pointer-events: none;
-    animation: panGrid 60s linear infinite;
-}
-
-@keyframes panGrid {
-    0% { transform: rotate(10deg) translateY(0); }
-    100% { transform: rotate(10deg) translateY(40px); }
+@keyframes moveGrid {
+    0% { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 0 0, 0 30px, 30px 0; }
 }
 
 .app-container {
@@ -45,198 +34,174 @@ body::before {
 }
 
 /* Шапка */
-#main-header {
-    margin-bottom: 30px;
-}
+#main-header { margin-bottom: 25px; }
 
 .hero-section {
     width: 100%;
-    height: 140px;
-    border-radius: 0 0 24px 24px;
-    overflow: hidden;
-    margin-bottom: 25px;
-    position: relative;
-    background: linear-gradient(135deg, rgba(11, 16, 30, 0.9), rgba(22, 33, 62, 0.9));
-    border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    position: relative;
+    background: linear-gradient(180deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
+    border-bottom: 2px solid #00e5ff;
+    box-shadow: 0 10px 20px -10px rgba(0, 229, 255, 0.3);
 }
 
 .hero-content {
     text-align: center;
+    animation: pulseGlow 3s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { filter: drop-shadow(0 0 5px #00e5ff); }
+    100% { filter: drop-shadow(0 0 20px #00e5ff); }
 }
 
 .drone-icon {
-    font-size: 36px;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 0 12px #4fc3f7);
+    font-size: 32px;
+    margin-bottom: 5px;
 }
 
 .hero-text {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
-    letter-spacing: 5px;
-    color: #4fc3f7;
-    text-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
+    letter-spacing: 8px;
+    color: #fff;
+    text-shadow: 0 0 10px #00e5ff;
 }
 
 .hero-subtext {
-    font-size: 11px;
-    color: #718096;
-    letter-spacing: 3px;
+    font-size: 10px;
+    color: #00e5ff;
+    letter-spacing: 4px;
     margin-top: 5px;
 }
 
-h1 { 
-    font-size: 28px; 
-    font-weight: 800; 
-    background: linear-gradient(90deg, #4fc3f7, #00e5ff); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
+h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
     margin-bottom: 5px;
-    text-align: left; 
-    letter-spacing: 0.5px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 4px solid #00e5ff;
+    padding-left: 10px;
 }
 
-.subtitle { 
-    color: #64748b; 
-    font-size: 14px; 
-    font-weight: 500; 
-    text-align: left; 
+.subtitle {
+    color: #64748b;
+    font-size: 13px;
+    text-align: left;
+    padding-left: 14px;
     margin-bottom: 25px;
 }
 
-/* Папки (Glassmorphism эффект) */
+/* Стиль папок (Карточки) */
 .folder {
-    background: rgba(20, 30, 55, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 14px;
-    margin-bottom: 14px;
+    background: rgba(10, 15, 30, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    border-radius: 8px;
+    margin-bottom: 12px;
     overflow: hidden;
-    border: 1px solid rgba(79, 195, 247, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.folder:hover { 
-    border-color: rgba(79, 195, 247, 0.4);
-    box-shadow: 0 0 20px rgba(79, 195, 247, 0.15);
-    transform: translateY(-2px);
+/* Светящаяся полоска слева у папки */
+.folder::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: #00e5ff;
+    box-shadow: 0 0 10px #00e5ff;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.folder:hover {
+    background: rgba(15, 25, 45, 0.9);
+    border-color: rgba(0, 229, 255, 0.4);
+    box-shadow: 0 5px 20px rgba(0, 229, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.folder:hover::before { opacity: 1; }
+
+.folder.open {
+    border-color: rgba(0, 229, 255, 0.6);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
 }
 
 .folder-header {
-    padding: 18px 20px;
+    padding: 16px 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-weight: 600;
+    gap: 15px;
+    font-weight: 700;
     font-size: 15px;
-    color: #f1f5f9;
-    transition: background 0.2s;
-}
-
-.folder-header:hover { 
-    background: rgba(79, 195, 247, 0.05); 
+    color: #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .folder-header .arrow {
     margin-left: auto;
     transition: transform 0.3s ease;
-    font-size: 12px;
-    color: #4fc3f7;
+    font-size: 10px;
+    color: #00e5ff;
 }
 
-.folder.open > .folder-header .arrow { 
-    transform: rotate(90deg); 
+.folder.open > .folder-header .arrow {
+    transform: rotate(90deg);
 }
 
 .folder-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background: rgba(10, 15, 30, 0.4);
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 /* Документы */
 .doc {
-    padding: 15px 20px 15px 45px;
+    padding: 14px 20px 14px 45px;
     color: #94a3b8;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 14px;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.05);
     transition: all 0.2s;
-    text-decoration: none;
+    position: relative;
 }
 
 .doc:last-child { border-bottom: none; }
 
-.doc:hover { 
-    color: #4fc3f7; 
-    background: rgba(79, 195, 247, 0.08); 
-    padding-left: 50px; /* Небольшой сдвиг при наведении */
+.doc:hover {
+    color: #00e5ff;
+    background: rgba(0, 229, 255, 0.05);
+    padding-left: 50px;
 }
 
+/* Иконка документа (квадратик) */
 .doc span:first-child {
-    font-size: 16px;
-    filter: grayscale(1);
-    transition: filter 0.2s;
-}
-
-.doc:hover span:first-child {
-    filter: grayscale(0);
-}
-
-/* Экран чтения (если откроешь текст) */
-.hidden { display: none !important; }
-
-#reader-view { animation: slideUp 0.3s ease-out; }
-
-.reader-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-top: 30px;
-}
-
-.back-btn {
-    background: rgba(79, 195, 247, 0.1);
-    border: 1px solid rgba(79, 195, 247, 0.3);
-    color: #4fc3f7;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(0, 229, 255, 0.4);
+    border-radius: 2px;
     transition: all 0.2s;
 }
 
-.back-btn:hover { background: rgba(79, 195, 247, 0.2); }
-
-#reader-title { font-size: 20px; color: #e2e8f0; }
-
-.reader-content {
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 25px;
-    border: 1px solid rgba(79, 195, 247, 0.15);
-    line-height: 1.8;
-    font-size: 16px;
-    color: #cbd5e1;
-    min-height: 300px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.doc:hover span:first-child {
+    background: #00e5ff;
+    box-shadow: 0 0 10px #00e5ff;
+    border-color: #00e5ff;
 }
