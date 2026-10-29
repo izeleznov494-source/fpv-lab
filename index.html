@@ -2,16 +2,30 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FPV Лаборатория</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>🔬 FPV Лаборатория</h1>
-        <p class="subtitle">Выберите тему для изучения</p>
-    </header>
-    <main id="app"></main>
+    <div class="bg-grid"></div>
+    <div class="app-container">
+        <header id="main-header">
+            <h1>🔬 FPV Лаборатория</h1>
+            <p class="subtitle">База знаний и инструкции</p>
+        </header>
+        
+        <main id="app"></main>
+
+        <div id="reader-view" class="hidden">
+            <div class="reader-header">
+                <button class="back-btn" onclick="closeReader()">← Назад</button>
+                <h2 id="reader-title">Заголовок</h2>
+            </div>
+            <div id="reader-content" class="reader-content">
+                <!-- Текст лекции -->
+            </div>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
